@@ -1,0 +1,18 @@
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  /* 
+      colors: #fffacc - pastel yellow
+              #ff3bba - pastel yellow, darker
+              #ffb2b2 - pastel red
+              #6dc9c9 - pastel blue
+              #a5d8d8 - pastel blue, lighter
+  
+      */
+}
+body {
+  background-color: #fdfdfd;
+}
