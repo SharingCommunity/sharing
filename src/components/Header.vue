@@ -1,14 +1,35 @@
 <template>
     <div class="mt-2">
-        <div class="d-flex justify-content-between">
-            <span class="brand">Sharing Logo Here</span>
-            <div class="new">
-                <b-button
-                    v-b-modal.modal1
-                    aria-label="heavy plus sign"
-                    title="➕ Add new post &#x2795; "
-                    variant="danger"
-                >New Post</b-button>
+        <div class="">
+            <div class="row">
+                <b-col>
+                    <span class="brand">
+                        <b>Sharing Logo Here</b>
+                    </span>
+                    <span>
+                        Find your place to ❤️ live, 👩‍💻 work, and 💃 play
+                        Nomad List is a crowdsourced database of cities in the world analyzing 255,439+ data points every second to help you choose where to go next — and when you arrive, it connects you with 6,365+ 🌍 nomads there.
+                    </span>
+                </b-col>
+            </div>
+            <div class="row">
+                <b-col>
+                    <b-button
+                        aria-label="About Button"
+                        v-b-tooltip.hover.left
+                        title="❤️ About"
+                        variant="danger-outline"
+                        class="mx-1"
+                    >Why tho? ❤️</b-button>
+                    <b-button
+                        v-b-modal.modal1
+                        aria-label="heavy plus sign"
+                        v-b-tooltip.hover.right
+                        title="✨Add new post"
+                        variant="danger"
+                        class="mx-1"
+                    >New Post ✨</b-button>
+                </b-col>
             </div>
         </div>
         <post-modal></post-modal>
@@ -33,6 +54,6 @@ export default {
   display: inline;
 }
 .brand {
-  font-size: 40px;
+  font-size: 20px;
 }
 </style>

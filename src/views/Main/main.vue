@@ -1,11 +1,10 @@
 <template>
-    <div id="main-view" class="my-2 p-2">
-        <div>
-          <b-card class="post">
-            Stuff
-          </b-card>
-        </div>
+  <div id="main-view" class="my-2 p-2">
+    <p>Newest Posts</p>
+    <div>
+      <b-card class="post">Stuff</b-card>
     </div>
+  </div>
 </template>
 
 <script>
