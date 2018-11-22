@@ -4,5 +4,5 @@
   </div>
 </template>
 
-<style src="./App.css"></style>
-
+<style src="./App.css">
+</style>
