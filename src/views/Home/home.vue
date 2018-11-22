@@ -1,18 +1,17 @@
 <template>
-    <div id="home">
-       <b-container id="view" fluid>
-         <header-component></header-component>
-         <b-row>
-           <b-col md="9" sm="12" order-md="1" order-sm="2">
-            <router-view></router-view>
-           </b-col>
-           <b-col class="sidebar" md="3" sm="12" order-md="2" order-sm="1">
-             <sidebar-component></sidebar-component>
-           </b-col>
-         </b-row>
-       </b-container>
-
-    </div>
+  <div id="home">
+    <b-container id="view" fluid>
+      <header-component></header-component>
+      <b-row>
+        <b-col md="9" sm="12" order-md="1" order-sm="2">
+          <router-view></router-view>
+        </b-col>
+        <b-col class="sidebar" md="3" sm="12" order-md="2" order-sm="1">
+          <sidebar-component></sidebar-component>
+        </b-col>
+      </b-row>
+    </b-container>
+  </div>
 </template>
 <script>
 import SidebarComponent from "../../components/Sidebar.vue";
