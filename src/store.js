@@ -1,23 +1,34 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue";
+import Vuex from "vuex";
+import Axios from "axios";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    messages: []
+    posts: []
+  },
+  getters: {
+    POSTS: state => {
+      return state.posts;
+    }
   },
   mutations: {
-    ADD_MESSAGE(state, message){
-      state.messages.push(message)
+    ADD_POST: (state, post) => {
+      state.posts.push(post);
+    },
+    SET_POSTS: (state, payload) => {
+      state.posts = payload;
     }
   },
   actions: {
-    ADD_MESSAGE(context,message){
-      context.commit('ADD_MESSAGE',message);
+    SET_POSTS: async context => {
+      let { data } = await Axios.get("http://localhost:3000/posts");
+      console.log(data);
+      context.commit("SET_POSTS", data);
+    },
+    ADD_POST: (context, post) => {
+      context.commit("ADD_POST", post);
     }
-  },
-  getters: {
-    messages: state => state.messages
   }
-})
+});

@@ -41,18 +41,13 @@ export default {
     this.$socket.on("connect", function() {
       console.log("Connected!");
     });
-    this.$socket.on("message", function(message) {
-      self.$store.dispatch("ADD_MESSAGE", message);
+    this.$socket.on("post", function(message) {
+      self.$store.dispatch("ADD_POST", message);
     });
-  },
-  sockets: {
-    connect() {
-      console.log("Socket Connected");
-    },
-    message: function(message) {
-      this.$store.commit("ADD_MESSAGE", message);
-      console.log(message);
-    }
+    this.$socket.on("new_post", function(post) {
+      self.$store.dispatch("ADD_POST", post);
+    });
+    this.$store.dispatch("SET_POSTS");
   }
 };
 </script>

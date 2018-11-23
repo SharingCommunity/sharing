@@ -1,73 +1,77 @@
 <template>
-    <div id="postmodal">
-        <!-- Modal Component -->
-        <b-modal id="modal1" title="Add a new Post" class="postmodal" ref="postmodal">
-            <!-- <b-input></b-input> -->
-            <slot slot="modal-header">
-                <p>💬</p>
-                <b-card class="w-100 postinput">{{postmessage}}</b-card>
-            </slot>
-            <div>
-                <b-tabs small v-model="tabIndex">
-                    <b-tab title="Tab 1" ref="tab-1" title-item-class="disabledTab">
-                        <p>Pick a post type</p>
-                        <div id="post-type" class="d-flex justify-content-around">
-                            <div
-                                class="border d-inline btn"
-                                @click.stop="goNext($refs.request.id)"
-                                ref="request"
-                                id="request"
-                            >
-                                <p>
-                                    <em>request</em>
-                                </p>
-                                <span>👐</span>
-                            </div>
-                            <div
-                                class="border d-inline btn"
-                                @click.stop="goNext($refs.give.id)"
-                                ref="give"
-                                id="give"
-                            >
-                                <p>
-                                    <em>give</em>
-                                </p>
-                                <span>🎁</span>
-                            </div>
-                        </div>
-                    </b-tab>
-                    <b-tab title="Tab 2" id="type" title-item-class="disabledTab" class="text-left">
-                        <b-row class="py-2">
-                            <b-col>
-                                <b-button @click="goNext($event.target.innerText)">🥪 Food</b-button>
-                            </b-col>
-                            <b-col>
-                                <b-button @click="goNext($event.target.innerText)">📚 Assignment</b-button>
-                            </b-col>
-                            <b-col>
-                                <b-button @click="goNext($event.target.innerText)">💕 Care</b-button>
-                            </b-col>
-                        </b-row>
-                        <b-row class="py-2">
-                            <b-col>
-                                <b-button @click="goNext($event.target.innerText)">🙏 Prayer</b-button>
-                            </b-col>
-                            <b-col>
-                                <b-button @click="goNext($event.target.innerText)">💲 Money</b-button>
-                            </b-col>
-                        </b-row>
-                    </b-tab>
-                    <b-tab title="Send Post" id="4" title-item-class="disabledTab">
-                        <p>Review your post, when you're ready hit send!</p>
-                    </b-tab>
-                </b-tabs>
+  <div id="postmodal">
+    <!-- Modal Component -->
+    <b-modal id="modal1" title="Add a new Post" class="postmodal" ref="postmodal">
+      <!-- <b-input></b-input> -->
+      <slot slot="modal-header">
+        <p>💬</p>
+        <b-card class="w-100 postinput">{{this.post.postmessage}}</b-card>
+      </slot>
+      <div>
+        <b-tabs small v-model="tabIndex">
+          <b-tab title="Tab 1" ref="tab-1" title-item-class="disabledTab">
+            <p>Pick a post type</p>
+            <div id="post-type" class="d-flex justify-content-around">
+              <div
+                class="border d-inline btn"
+                @click.stop="goNext($refs.request.id)"
+                ref="request"
+                id="request"
+              >
+                <p>
+                  <em>request</em>
+                </p>
+                <span>👐</span>
+              </div>
+              <div
+                class="border d-inline btn"
+                @click.stop="goNext($refs.give.id)"
+                ref="give"
+                id="give"
+              >
+                <p>
+                  <em>give</em>
+                </p>
+                <span>🎁</span>
+              </div>
             </div>
-            <slot slot="modal-footer">
-                <b-button @click="closeModal">Cancel</b-button>
-                <!-- <b-button @click="()=>{tabIndex++}">Next</b-button> -->
-            </slot>
-        </b-modal>
-    </div>
+          </b-tab>
+          <b-tab title="Tab 2" id="type" title-item-class="disabledTab" class="text-left">
+            <b-row class="py-2">
+              <b-col>
+                <b-button @click="goNext($event.target.innerText)">🥪 Food</b-button>
+              </b-col>
+              <b-col>
+                <b-button @click="goNext($event.target.innerText)">📚 Assignment</b-button>
+              </b-col>
+              <b-col>
+                <b-button @click="goNext($event.target.innerText)">💕 Care</b-button>
+              </b-col>
+            </b-row>
+            <b-row class="py-2">
+              <b-col>
+                <b-button @click="goNext($event.target.innerText)">🙏 Prayer</b-button>
+              </b-col>
+              <b-col>
+                <b-button @click="goNext($event.target.innerText)">💲 Money</b-button>
+              </b-col>
+            </b-row>
+          </b-tab>
+          <b-tab title="Send Post" id="4" title-item-class="disabledTab">
+            <p>Review your post, when you're ready hit send!</p>
+            <p>
+              <b-card class="w-100 postinput">{{this.post.postmessage}}</b-card>
+            </p>
+          </b-tab>
+        </b-tabs>
+      </div>
+      <slot slot="modal-footer">
+        <b-button @click="closeModal">Cancel</b-button>
+        <b-button @click="sendPost()" variant="success" v-show="tabIndex == 2">Send</b-button>
+        <!-- <b-button @click="()=>{tabIndex++}">Next</b-button> -->
+      </slot>
+    </b-modal>
+  </div>
 </template>
 
 <script>
@@ -82,50 +86,69 @@ export default {
       // Match choice
       switch (stage) {
         case "request":
-          this.postmessage = this.postmessage.concat(" I need help with");
+          this.post.postmessage = this.post.postmessage.concat(
+            " I need help with"
+          );
           this.post.tags.push("request");
           this.tabIndex++;
           break;
         case "give":
-          this.postmessage = this.postmessage.concat(" I can help you with");
+          this.post.postmessage = this.post.postmessage.concat(
+            " I can help you with"
+          );
           this.post.tags.push("give");
           this.tabIndex++;
           break;
         case "🥪 Food":
-          this.postmessage = this.postmessage.concat(" some 🥪 Food");
+          this.post.postmessage = this.post.postmessage.concat(" some 🥪 Food");
           this.post.tags.push("food");
           this.tabIndex++;
           break;
         case "📚 Assignment":
-          this.postmessage = this.postmessage.concat(" 📚 Assignment");
+          this.post.postmessage = this.post.postmessage.concat(
+            " 📚 Assignment"
+          );
           this.post.tags.push("assignment");
           this.tabIndex++;
           break;
         case "💕 Care":
-          this.postmessage = this.postmessage.concat(" 💕 Care");
+          this.post.postmessage = this.post.postmessage.concat(" 💕 Care");
           this.post.tags.push("care");
           this.tabIndex++;
           break;
         case "🙏 Prayer":
-          this.postmessage = this.postmessage.concat(" some 🙏 Prayer");
+          this.post.postmessage = this.post.postmessage.concat(
+            " some 🙏 Prayer"
+          );
           this.post.tags.push("prayer");
           this.tabIndex++;
           break;
         case "💲 Money":
-          this.postmessage = this.postmessage.concat(" some 💲 Money");
+          this.post.postmessage = this.post.postmessage.concat(
+            " some 💲 Money"
+          );
           this.post.tags.push("money");
           this.tabIndex++;
           break;
       }
       //   console.log(stage);
+    },
+    sendPost() {
+      let post = {
+        postmessage: this.post.postmessage,
+        tags: this.post.tags
+      };
+      // this.$store.dispatch("ADD_POST", post);
+      this.$socket.emit("post", post);
+      this.closeModal();
     }
   },
   data() {
     return {
       tabIndex: 0,
-      postmessage: "👋 Hi",
+      // postmessage: "👋 Hi",
       post: {
-        postmessage: this.postmessage,
+        postmessage: "👋 Hi",
         tags: []
       }
     };
@@ -133,9 +156,10 @@ export default {
   watch: {
     tabIndex() {
       if (this.tabIndex == 0) {
-        this.postmessage = "👋 Hi";
+        this.post.postmessage = "👋 Hi";
+        this.post.tags = [];
       }
-      console.log("changed!");
+      // console.log("changed!");
     }
   }
 };

@@ -16,13 +16,8 @@ export default {
     };
   },
   methods: {
-    sendMessage(message) {
-      this.$emit("message", message);
-    }
-  },
-  sockets: {
-    message(m) {
-      console.log("messagE", m);
+    sendMessage(post) {
+      this.$emit("post", post);
     }
   }
 };

@@ -2,7 +2,10 @@
   <div id="main-view" class="my-2 p-2">
     <p>Newest Posts</p>
     <div>
-      <b-card class="post">Stuff</b-card>
+      <b-card v-for="(post, i) in $store.getters.POSTS" :key="i" class="post">
+        {{post.postmessage}}
+        <p>Created: {{post.created | moment("HH:MM, DD-MM-YY")}}</p>
+      </b-card>
     </div>
   </div>
 </template>
