@@ -25,12 +25,12 @@
               </div>
               <div
                 class="border d-inline btn"
-                @click.stop="goNext($refs.give.id)"
-                ref="give"
-                id="give"
+                @click.stop="goNext($refs.offer.id)"
+                ref="offer"
+                id="offer"
               >
                 <p>
-                  <em>give</em>
+                  <em>offer</em>
                 </p>
                 <span>🎁</span>
               </div>
@@ -89,45 +89,47 @@ export default {
           this.post.postmessage = this.post.postmessage.concat(
             " I need help with"
           );
-          this.post.tags.push("request");
+          this.post.post_subject = "request";
+          this.post.request = true;
           this.tabIndex++;
           break;
-        case "give":
+        case "offer":
           this.post.postmessage = this.post.postmessage.concat(
-            " I can help you with"
+            " I can help with"
           );
-          this.post.tags.push("give");
+          this.post.post_subject = "offer";
+          this.post.offer = true;
           this.tabIndex++;
           break;
         case "🥪 Food":
           this.post.postmessage = this.post.postmessage.concat(" some 🥪 Food");
-          this.post.tags.push("food");
+          this.post.post_subject = "food";
           this.tabIndex++;
           break;
         case "📚 Assignment":
           this.post.postmessage = this.post.postmessage.concat(
             " 📚 Assignment"
           );
-          this.post.tags.push("assignment");
+          this.post.post_subject = "assignment";
           this.tabIndex++;
           break;
         case "💕 Care":
           this.post.postmessage = this.post.postmessage.concat(" 💕 Care");
-          this.post.tags.push("care");
+          this.post.post_subject = "care";
           this.tabIndex++;
           break;
         case "🙏 Prayer":
           this.post.postmessage = this.post.postmessage.concat(
             " some 🙏 Prayer"
           );
-          this.post.tags.push("prayer");
+          this.post.post_subject = "prayer";
           this.tabIndex++;
           break;
         case "💲 Money":
           this.post.postmessage = this.post.postmessage.concat(
             " some 💲 Money"
           );
-          this.post.tags.push("money");
+          this.post.post_subject = "money";
           this.tabIndex++;
           break;
       }
@@ -136,7 +138,9 @@ export default {
     sendPost() {
       let post = {
         postmessage: this.post.postmessage,
-        tags: this.post.tags
+        request: this.post.request,
+        offer: this.post.offer,
+        post_subject: this.post.post_subject
       };
       // this.$store.dispatch("ADD_POST", post);
       this.$socket.emit("post", post);
@@ -146,18 +150,21 @@ export default {
   data() {
     return {
       tabIndex: 0,
-      // postmessage: "👋 Hi",
       post: {
-        postmessage: "👋 Hi",
-        tags: []
+        postmessage: "👋 Hi,",
+        offer: null,
+        request: null,
+        post_subject: null
       }
     };
   },
   watch: {
     tabIndex() {
       if (this.tabIndex == 0) {
-        this.post.postmessage = "👋 Hi";
-        this.post.tags = [];
+        this.post.postmessage = "👋 Hi,";
+        this.post.offer = null;
+        this.post.request = null;
+        this.post.post_subject = null;
       }
       // console.log("changed!");
     }

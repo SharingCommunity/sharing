@@ -1,7 +1,10 @@
 <template>
   <div id="sidebar" class="my-2 shadow-sm">
     <b-alert show variant="secondary">Your posts show up here</b-alert>
-    <h2>Yaga</h2>
+    <div class="no-posts">
+      <p>🤷</p>
+      <p>You don't have any posts</p>
+    </div>
   </div>
 </template>
 
@@ -18,5 +21,11 @@ export default {
   border-radius: 8px;
   height: 80%;
   width: 100%;
+}
+.no-posts p:first-child {
+  font-size: 40px;
+}
+.no-posts {
+  font-size: 30px;
 }
 </style>

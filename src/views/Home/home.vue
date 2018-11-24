@@ -46,6 +46,7 @@ export default {
     });
     this.$socket.on("new_post", function(post) {
       self.$store.dispatch("ADD_POST", post);
+      console.log(post);
     });
     this.$store.dispatch("SET_POSTS");
   }

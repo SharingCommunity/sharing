@@ -1,18 +1,24 @@
 <template>
   <div id="main-view" class="my-2 p-2">
-    <p>Newest Posts</p>
-    <div>
-      <b-card v-for="(post, i) in $store.getters.POSTS" :key="i" class="post">
-        {{post.postmessage}}
-        <p>Created: {{post.created | moment("HH:MM, DD-MM-YY")}}</p>
-      </b-card>
+    <div v-if="$store.getters.POSTS.length == 0">
+      <p>🔦</p>
+      <p>No posts yet</p>
+    </div>
+    <div class="post-grid">
+      <div v-for="post in $store.getters.POSTS" :key="post._id">
+        <post-component :post="post" :id="post._id" class="post"></post-component>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import PostComponent from "../../components/Post.vue";
 export default {
-  name: "Main"
+  name: "Main",
+  components: {
+    PostComponent
+  }
 };
 </script>
 <style scoped>
@@ -21,11 +27,17 @@ export default {
   height: auto;
   /* background-color: #d1ecf1; */
 }
-.post {
-  background-color: #d1ecf1;
-  width: 100px;
-  overflow: hidden;
-  border-radius: 8px !important;
-  height: auto;
+.post-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  column-gap: 5px;
+  row-gap: 8px;
+}
+@media screen and (max-width: 630px) {
+  .post-grid {
+    grid-template-columns: 1fr;
+    grid-gap: 5px;
+  }
 }
 </style>

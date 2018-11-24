@@ -16,7 +16,6 @@
                 <b-col>
                     <b-button
                         aria-label="About Button"
-                        v-b-tooltip.hover.left
                         title="❤️ About"
                         variant="danger-outline"
                         class="mx-1"
@@ -24,7 +23,6 @@
                     <b-button
                         v-b-modal.modal1
                         aria-label="heavy plus sign"
-                        v-b-tooltip.hover.right
                         title="✨Add new post"
                         variant="danger"
                         class="mx-1"
