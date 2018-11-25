@@ -5,6 +5,13 @@
       <b-row>
         <b-col md="9" sm="12" order-md="1" order-sm="2">
           <router-view></router-view>
+          <alert-component
+            :message="alert_message"
+            :show="dismissCountdown"
+            @count_down_changed="count_down_changed"
+            @alert_dismissed="dismissSeconds=0"
+            class="fixed-bottom"
+          ></alert-component>
         </b-col>
         <b-col class="sidebar" md="3" sm="12" order-md="2" order-sm="1">
           <sidebar-component></sidebar-component>
@@ -16,37 +23,46 @@
 <script>
 import SidebarComponent from "../../components/Sidebar.vue";
 import HeaderComponent from "../../components/Header.vue";
+import AlertComponent from "../../components/Alert.vue";
 export default {
   name: "Home",
   data() {
     return {
-      msg: "Hi!"
+      msg: "Hi!",
+      dismissCountdown: 0,
+      dismissSeconds: 5,
+      alert_message: ""
     };
   },
   components: {
     SidebarComponent,
-    HeaderComponent
+    HeaderComponent,
+    AlertComponent
   },
   methods: {
-    printMessage(message) {
-      this.$socket.emit("message", message);
+    show_alert(con) {
+      (this.dismissCountdown = this.dismissSeconds),
+        (this.alert_message = "A new connection was made! " + con._id);
     },
-    commitMessage(message) {
-      this.$store.commit("ADD_MESSAGE", message);
-      console.log(message);
+    count_down_changed(seconds) {
+      this.dismissCountdown = seconds;
     }
   },
   mounted() {
-    var self = this;
+    let self = this;
     this.$socket.on("connect", function() {
       console.log("Connected!");
     });
-    this.$socket.on("post", function(message) {
-      self.$store.dispatch("ADD_POST", message);
+    this.$socket.on("post", function(post) {
+      self.$store.dispatch("ADD_POST", post);
     });
     this.$socket.on("new_post", function(post) {
-      self.$store.dispatch("ADD_POST", post);
+      self.$store.dispatch("ADD_NEW_POST", post);
       console.log(post);
+    });
+    this.$socket.on("new_connection", function(con) {
+      self.show_alert(con);
+      // self.$store.dispatch("ADD_CONNECTION", con);
     });
     this.$store.dispatch("SET_POSTS");
   }

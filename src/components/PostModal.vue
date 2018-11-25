@@ -142,7 +142,6 @@ export default {
         offer: this.post.offer,
         post_subject: this.post.post_subject
       };
-      // this.$store.dispatch("ADD_POST", post);
       this.$socket.emit("post", post);
       this.closeModal();
     }

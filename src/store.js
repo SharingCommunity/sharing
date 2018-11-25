@@ -6,15 +6,22 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    posts: []
+    posts: [],
+    events: []
   },
   getters: {
     POSTS: state => {
       return state.posts;
+    },
+    EVENTS: state => {
+      return state.events;
     }
   },
   mutations: {
     ADD_POST: (state, post) => {
+      state.posts.push(post);
+    },
+    ADD_MY_POST: (state, post) => {
       state.posts.push(post);
     },
     SET_POSTS: (state, payload) => {
@@ -28,6 +35,9 @@ export default new Vuex.Store({
       context.commit("SET_POSTS", data);
     },
     ADD_POST: (context, post) => {
+      context.commit("ADD_MY_POST", post);
+    },
+    ADD_NEW_POST: (context, post) => {
       context.commit("ADD_POST", post);
     }
   }
