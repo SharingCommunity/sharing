@@ -2,6 +2,8 @@ import Vue from "vue";
 import Vuex from "vuex";
 import Axios from "axios";
 
+Axios.defaults.withCredentials = true;
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -26,11 +28,14 @@ export default new Vuex.Store({
     },
     SET_POSTS: (state, payload) => {
       state.posts = payload;
+    },
+    ADD_EVENT: (state, event) => {
+      state.events.push(event);
     }
   },
   actions: {
     SET_POSTS: async context => {
-      let { data } = await Axios.get("http://localhost:3000/posts");
+      let { data } = await Axios.get("http://localhost:3000/api/posts");
       console.log(data);
       context.commit("SET_POSTS", data);
     },
@@ -39,6 +44,9 @@ export default new Vuex.Store({
     },
     ADD_NEW_POST: (context, post) => {
       context.commit("ADD_POST", post);
+    },
+    ADD_EVENT: (context, event) => {
+      context.commit("NEW_EVENT", event);
     }
   }
 });
