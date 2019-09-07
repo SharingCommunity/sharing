@@ -1,12 +1,14 @@
 <template>
-    <div :id="id" class="mx-1 d-flex" :title="post.created | moment('from')">
-        <div class="d-flex justify-content-between post-details px-1">
-            <span>{{post.offer | postType}}</span>
-            <small class="text-muted">Posted {{post.created | moment("from")}}</small>
-        </div>
-        <p class="card-text my-1 align-self-center">{{post.postmessage}}</p>
-        <div></div>
+  <div :id="id" class="mx-1 d-flex" :title="post.created | moment('from')">
+    <div class="d-flex justify-content-between post-details px-1">
+      <span>{{ post.offer | postType }}</span>
+      <small class="text-muted"
+        >Posted {{ post.created | moment("from") }}</small
+      >
     </div>
+    <p class="card-text my-1 align-self-center">{{ post.postmessage }}</p>
+    <div></div>
+  </div>
 </template>
 
 <script>

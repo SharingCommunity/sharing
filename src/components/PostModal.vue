@@ -1,11 +1,16 @@
 <template>
   <div id="postmodal">
     <!-- Modal Component -->
-    <b-modal id="modal1" title="Add a new Post" class="postmodal" ref="postmodal">
+    <b-modal
+      id="modal1"
+      title="Add a new Post"
+      class="postmodal"
+      ref="postmodal"
+    >
       <!-- <b-input></b-input> -->
       <slot slot="modal-header">
         <p>💬</p>
-        <b-card class="w-100 postinput">{{this.post.postmessage}}</b-card>
+        <b-card class="w-100 postinput">{{ this.post.postmessage }}</b-card>
       </slot>
       <div>
         <b-tabs small v-model="tabIndex">
@@ -36,38 +41,57 @@
               </div>
             </div>
           </b-tab>
-          <b-tab title="Tab 2" id="type" title-item-class="disabledTab" class="text-left">
+          <b-tab
+            title="Tab 2"
+            id="type"
+            title-item-class="disabledTab"
+            class="text-left"
+          >
             <b-row class="py-2">
               <b-col>
-                <b-button @click="goNext($event.target.innerText)">🥪 Food</b-button>
+                <b-button @click="goNext($event.target.innerText)"
+                  >🥪 Food</b-button
+                >
               </b-col>
               <b-col>
-                <b-button @click="goNext($event.target.innerText)">📚 Assignment</b-button>
+                <b-button @click="goNext($event.target.innerText)"
+                  >📚 Assignment</b-button
+                >
               </b-col>
               <b-col>
-                <b-button @click="goNext($event.target.innerText)">💕 Care</b-button>
+                <b-button @click="goNext($event.target.innerText)"
+                  >💕 Care</b-button
+                >
               </b-col>
             </b-row>
             <b-row class="py-2">
               <b-col>
-                <b-button @click="goNext($event.target.innerText)">🙏 Prayer</b-button>
+                <b-button @click="goNext($event.target.innerText)"
+                  >🙏 Prayer</b-button
+                >
               </b-col>
               <b-col>
-                <b-button @click="goNext($event.target.innerText)">💲 Money</b-button>
+                <b-button @click="goNext($event.target.innerText)"
+                  >💲 Money</b-button
+                >
               </b-col>
             </b-row>
           </b-tab>
           <b-tab title="Send Post" id="4" title-item-class="disabledTab">
             <p>Review your post, when you're ready hit send!</p>
             <p>
-              <b-card class="w-100 postinput">{{this.post.postmessage}}</b-card>
+              <b-card class="w-100 postinput">{{
+                this.post.postmessage
+              }}</b-card>
             </p>
           </b-tab>
         </b-tabs>
       </div>
       <slot slot="modal-footer">
         <b-button @click="closeModal">Cancel</b-button>
-        <b-button @click="sendPost()" variant="success" v-show="tabIndex == 2">Send</b-button>
+        <b-button @click="sendPost()" variant="success" v-show="tabIndex == 2"
+          >Send</b-button
+        >
         <!-- <b-button @click="()=>{tabIndex++}">Next</b-button> -->
       </slot>
     </b-modal>

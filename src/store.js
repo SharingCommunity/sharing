@@ -35,7 +35,11 @@ export default new Vuex.Store({
   },
   actions: {
     SET_POSTS: async context => {
-      let { data } = await Axios.get("http://localhost:3000/api/posts");
+      const { data } = JSON.parse(
+        Axios.get("http://localhost:3000/api/posts", {
+          withCredentials: true
+        }).data
+      );
       console.log(data);
       context.commit("SET_POSTS", data);
     },

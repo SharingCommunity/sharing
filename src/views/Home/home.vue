@@ -13,7 +13,14 @@
             class="fixed-bottom"
           ></alert-component>
         </b-col>
-        <b-col class="sidebar" md="3" sm="12" order-md="2" order-sm="1">
+        <b-col
+          class="sidebar fixed-sidebar"
+          id="sidebar-container"
+          md="3"
+          sm="12"
+          order-md="2"
+          order-sm="1"
+        >
           <sidebar-component></sidebar-component>
         </b-col>
       </b-row>
@@ -24,8 +31,8 @@
 import SidebarComponent from "../../components/Sidebar.vue";
 import HeaderComponent from "../../components/Header.vue";
 import AlertComponent from "../../components/Alert.vue";
-import Axios from "axios";
-import Router from "../../router.js";
+// import Axios from "axios";
+// import Router from "../../router.js";
 export default {
   name: "Home",
   data() {
@@ -59,19 +66,34 @@ export default {
       this.dismissCountdown = seconds;
     },
     getUserData() {
-      let self = this;
-      Axios.get("http://localhost:3000/api/connect")
-        .then(response => {
-          console.log(response.headers);
-          self.$set(this, "user", response);
-        })
-        .catch(err => {
-          console.log(err);
-          Router.push("/");
-        });
+      // let self = this;
+      // Axios.get("http://localhost:3000/api/connect")
+      //   .then(response => {
+      //     console.log(response.headers);
+      //     self.$set(this, "user", response);
+      //   })
+      //   .catch(err => {
+      //     console.log(err);
+      //     Router.push("/");
+      //   });
     }
   },
   mounted() {
+    // window.onscroll = function(ev) {
+    //   const windowScroll = ev.view.document.scrollingElement.scrollTop;
+    //   if (
+    //     document.getElementById("sidebar-container").scrollTop <= windowScroll
+    //   ) {
+    //     document
+    //       .getElementById("sidebar-container")
+    //       .toggleAttribute("class", "fixed-sidebar");
+    //   } else {
+    //     document
+    //       .getElementById("sidebar-container")
+    //       .toggleAttribute("class", "fixed-sidebar");
+    //   }
+    // };
+
     let self = this;
     this.$socket.on("connect", function() {
       console.log("Connected!");
@@ -96,4 +118,4 @@ export default {
   }
 };
 </script>
-<style src="./home.css"></style>
+<style src="./home.css" scoped></style>

@@ -1,14 +1,14 @@
 <template>
-    <b-alert
-        :show="show"
-        dismissible
-        fade
-        variant="warning"
-        @dismissed="alertDismissed"
-        @dismiss-count-down="countDownChanged"
-    >
-        <p>{{message}}</p>
-    </b-alert>
+  <b-alert
+    :show="show"
+    dismissible
+    fade
+    variant="warning"
+    @dismissed="alertDismissed"
+    @dismiss-count-down="countDownChanged"
+  >
+    <p>{{ message }}</p>
+  </b-alert>
 </template>
 
 <script>
@@ -26,5 +26,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

@@ -43,7 +43,6 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(r => r.meta.requiresAuth)) {
     if (!router.app.$session.exists()) {
       console.log("NO Session!");
-      console.log(window.$cookies.keys());
       next({ path: "/auth" });
     } else {
       next();

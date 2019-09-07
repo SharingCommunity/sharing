@@ -6,7 +6,11 @@
     </div>
     <div class="post-grid">
       <div v-for="post in $store.getters.POSTS" :key="post._id">
-        <post-component :post="post" :id="post._id" class="post"></post-component>
+        <post-component
+          :post="post"
+          :id="post._id"
+          class="post"
+        ></post-component>
       </div>
     </div>
   </div>
