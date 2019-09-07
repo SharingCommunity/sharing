@@ -5,7 +5,12 @@
 </template>
 <script>
 export default {
-  name: "AuthComponent"
+  name: "AuthComponent",
+  data() {
+    return {
+      inSignup: false
+    };
+  }
 };
 </script>
 <style scoped></style>

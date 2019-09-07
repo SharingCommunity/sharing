@@ -2,7 +2,7 @@
   <div id="login" class="container">
     <b-card class="p-3 shadow-sm mt-5 mx-auto form">
       <h3 class="text-bold">
-        Login plix
+        Login
       </h3>
       <b-alert
         :show="dismissCountdown"
@@ -45,9 +45,6 @@
           >
             Login
           </b-button>
-          <b-button block variant="primary" @click="sendRequest()"
-            >Send request</b-button
-          >
           <p class="mt-3 text-center" style="color: peach">
             <router-link class="mx-auto text-muted mt-3 text-center" to="join"
               >Signup instead</router-link
@@ -69,7 +66,7 @@ export default {
         Password: ""
       },
       disabled: false,
-      message: "Hey!",
+      message: "",
       dismissCountdown: 0,
       dismissSeconds: 5,
       variant: "primary"
@@ -85,14 +82,15 @@ export default {
           { data: this.form },
           { withCredentials: true }
         )
-        .then(response => {
+        .then(r => {
+          const response = JSON.parse(r.data);
           setTimeout(() => {
             this.disabled = false;
             this.clearForm();
-            this.showAlert(response.data.message, response.data.error);
+            this.showAlert(response.message, response.error);
           }, 2000);
           this.$session.start();
-          this.$session.set("sharing", response.data.result);
+          this.$session.set("sharing", response.result);
           this.$router.push("/main");
         })
         .catch(err => {
@@ -101,14 +99,15 @@ export default {
             this.clearForm();
           }, 2000);
           if (err.response) {
-            this.showAlert(err.response.data.message, err.response.data.error);
+            const error = JSON.parse(err.response.data);
+            this.showAlert(error.message, error.error);
             console.log(err.response.status);
           } else if (err.request) {
             console.log(err.request);
-            this.showAlert("Unexpected Error :(, please try again");
+            this.showAlert("Unexpected Error :( please try again");
           } else {
             console.log("Error => ", err);
-            this.showAlert("Unexpected Error :(, please try again");
+            this.showAlert("Unexpected Error :( please try again");
           }
         });
       // console.log("Axios => ", this.axios);
@@ -128,16 +127,6 @@ export default {
     },
     dismissCountChanged(secs) {
       this.dismissCountdown = secs;
-    },
-    sendRequest() {
-      axios
-        .get("http://localhost:3000/api/posts", { withCredentials: true })
-        .then(res => {
-          console.log("Response => ", res.data);
-        })
-        .catch(err => {
-          console.log("Error => ", err);
-        });
     }
   }
 };
