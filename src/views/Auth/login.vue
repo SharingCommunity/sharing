@@ -82,16 +82,18 @@ export default {
           { data: this.form },
           { withCredentials: true }
         )
-        .then(r => {
-          const response = JSON.parse(r.data);
+        .then(response => {
           setTimeout(() => {
             this.disabled = false;
             this.clearForm();
-            this.showAlert(response.message, response.error);
+            this.showAlert(response.data.message, response.data.error);
+            // Yaa
+
+            this.$session.start();
+            this.$session.set("sharing", response.data.result);
+            this.$store.dispatch("SET_USER", response.data.u);
+            this.$router.push("/main");
           }, 2000);
-          this.$session.start();
-          this.$session.set("sharing", response.result);
-          this.$router.push("/main");
         })
         .catch(err => {
           setTimeout(() => {

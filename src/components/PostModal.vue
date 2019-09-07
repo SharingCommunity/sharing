@@ -1,8 +1,8 @@
 <template>
-  <div id="postmodal">
+  <div>
     <!-- Modal Component -->
     <b-modal
-      id="modal1"
+      id="postmodal"
       title="Add a new Post"
       class="postmodal"
       ref="postmodal"

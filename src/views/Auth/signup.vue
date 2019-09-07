@@ -150,8 +150,9 @@ export default {
             this.showAlert(response.data.message, response.data.error);
             this.$session.start();
             this.$session.set("sharing", response.result);
+            this.$store.dispatch("SET_USER", response.data.u);
             this.$router.push("/main");
-          }, 2400);
+          }, 2000);
         })
         .catch(err => {
           setTimeout(() => {

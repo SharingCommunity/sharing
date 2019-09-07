@@ -1,6 +1,9 @@
 <template>
-  <div class="mt-2">
-    <div class="">
+  <div
+    class="alert p-1 sharing-blue-style d-flex justify-content-between"
+    id="header"
+  >
+    <!-- <div class="">
       <div class="row">
         <b-col>
           <span class="brand">
@@ -14,13 +17,6 @@
       <div class="row">
         <b-col>
           <b-button
-            aria-label="About Button"
-            title="❤️ About"
-            variant="danger-outline"
-            class="mx-1"
-            >Why tho? ❤️</b-button
-          >
-          <b-button
             v-b-modal.modal1
             aria-label="heavy plus sign"
             title="✨Add new post"
@@ -30,18 +26,19 @@
           >
         </b-col>
       </div>
+    </div> -->
+    <div>
+      <b-button>back</b-button>
+      <span class="ml-3 p-2">&#127968; Home</span>
     </div>
-    <post-modal></post-modal>
+    <h5 class="mb-0">Sharing App</h5>
+    <b-button class="new-post-button" v-b-modal.postmodal>New Post</b-button>
   </div>
 </template>
 
 <script>
-import PostModal from "./PostModal.vue";
 export default {
-  name: "HeaderComponent",
-  components: {
-    PostModal
-  }
+  name: "HeaderComponent"
 };
 </script>
 
@@ -52,7 +49,20 @@ export default {
   font-weight: 800;
   display: inline;
 }
+.new-post-button {
+  background-color: rgb(223, 7, 50) !important;
+  border: 2px solid rgb(223, 7, 50) !important;
+}
 .brand {
   font-size: 20px;
+}
+.header {
+  margin-bottom: 0.5rem;
+}
+.card {
+  margin: 0;
+}
+.p15 {
+  padding: 0px 15px !important;
 }
 </style>

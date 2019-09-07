@@ -1,9 +1,20 @@
 <template>
   <div id="home">
     <b-container id="view" fluid>
-      <header-component></header-component>
       <b-row>
-        <b-col md="9" sm="12" order-md="1" order-sm="2">
+        <b-col md="9">
+          <div>
+            <header-component></header-component>
+          </div>
+        </b-col>
+        <b-col>
+          <!-- <b-alert variant="success" show>Hello Guys!</b-alert> -->
+          <user-component :username="username"></user-component>
+        </b-col>
+      </b-row>
+
+      <b-row>
+        <b-col id="main-view" md="9" sm="12" order-md="1" order-sm="2">
           <router-view></router-view>
           <alert-component
             :message="alert_message"
@@ -30,6 +41,7 @@
 <script>
 import SidebarComponent from "../../components/Sidebar.vue";
 import HeaderComponent from "../../components/Header.vue";
+import UserComponent from "../../components/User.vue";
 import AlertComponent from "../../components/Alert.vue";
 // import Axios from "axios";
 // import Router from "../../router.js";
@@ -41,12 +53,14 @@ export default {
       dismissCountdown: 0,
       dismissSeconds: 5,
       alert_message: "",
-      user: {}
+      user: {},
+      username: "Posh fish"
     };
   },
   components: {
     SidebarComponent,
     HeaderComponent,
+    UserComponent,
     AlertComponent
   },
   methods: {

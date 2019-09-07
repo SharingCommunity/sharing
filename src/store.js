@@ -9,7 +9,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     posts: [],
-    events: []
+    events: [],
+    user: {}
   },
   getters: {
     POSTS: state => {
@@ -17,9 +18,15 @@ export default new Vuex.Store({
     },
     EVENTS: state => {
       return state.events;
+    },
+    USER: state => {
+      return state.user;
     }
   },
   mutations: {
+    SET_USER: (state, user) => {
+      state.user = user;
+    },
     ADD_POST: (state, post) => {
       state.posts.push(post);
     },
@@ -34,6 +41,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    SET_USER: (context, user) => {
+      context.commit("SET_USER", user);
+    },
     SET_POSTS: async context => {
       const { data } = JSON.parse(
         Axios.get("http://localhost:3000/api/posts", {

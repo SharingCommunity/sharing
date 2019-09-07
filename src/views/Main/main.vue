@@ -13,15 +13,18 @@
         ></post-component>
       </div>
     </div>
+    <post-modal></post-modal>
   </div>
 </template>
 
 <script>
 import PostComponent from "../../components/Post.vue";
+import PostModal from "../../components/PostModal.vue";
 export default {
   name: "Main",
   components: {
-    PostComponent
+    PostComponent,
+    PostModal
   }
 };
 </script>
