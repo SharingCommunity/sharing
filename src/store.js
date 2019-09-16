@@ -10,7 +10,7 @@ export default new Vuex.Store({
   state: {
     posts: [],
     events: [],
-    user: {}
+    user: ""
   },
   getters: {
     POSTS: state => {

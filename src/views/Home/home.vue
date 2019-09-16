@@ -9,7 +9,7 @@
         </b-col>
         <b-col>
           <!-- <b-alert variant="success" show>Hello Guys!</b-alert> -->
-          <user-component :username="username"></user-component>
+          <user-component :username="this.$store.getters.USER"></user-component>
         </b-col>
       </b-row>
 
@@ -53,8 +53,7 @@ export default {
       dismissCountdown: 0,
       dismissSeconds: 5,
       alert_message: "",
-      user: {},
-      username: "Posh fish"
+      user: {}
     };
   },
   components: {

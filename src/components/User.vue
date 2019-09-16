@@ -4,7 +4,7 @@
     class="alert d-flex justify-content-between mb-0 p-1 sharing-blue-style"
   >
     <div class="d-flex user-block align-items-center">
-      <div class="avatar bg-red"></div>
+      <!-- <div class="avatar bg-red"></div> -->
       <span class="ml-1 text-bold">{{ username }}</span>
     </div>
 
@@ -22,15 +22,37 @@
           &#8801;
         </span>
       </template>
-      <b-dropdown-item>
+      <b-dropdown-item @click="logout()">
         &#x1F44B; Logout
       </b-dropdown-item>
     </b-dropdown>
   </div>
 </template>
 <script>
+import axios from "axios";
 export default {
-  props: ["username"]
+  props: ["username"],
+  methods: {
+    logout() {
+      console.log("Logged out!");
+      axios
+        .get("http://localhost:3000/api/user/logout", { withCredentials: true })
+        .then(res => {
+          console.log(res.data.message);
+          this.$session.destroy();
+          this.$router.push("/auth");
+        })
+        .catch(err => {
+          if (err.response) {
+            console.log(err.response.status);
+          } else if (err.request) {
+            console.log(err.request);
+          } else {
+            console.log("Error => ", err);
+          }
+        });
+    }
+  }
 };
 </script>
 <style scoped>
@@ -48,7 +70,7 @@ export default {
 }
 
 .user-block {
-  font-size: 18px;
+  font-size: 12px;
   font-weight: bold;
 }
 

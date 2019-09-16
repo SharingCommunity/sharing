@@ -13,7 +13,7 @@
         {{ message }}
       </b-alert>
       <b-card-body>
-        <b-form @submit="submit" class="p-1 text-left">
+        <b-form @submit="submit" id="form" class="p-1 text-left">
           <b-form-group id="email-fg" label="Email" label-for="email">
             <b-input
               id="email"
@@ -83,16 +83,16 @@ export default {
           { withCredentials: true }
         )
         .then(response => {
+          this.disabled = false;
+          this.clearForm();
+          this.showAlert(response.data.message, response.data.error);
           setTimeout(() => {
-            this.disabled = false;
-            this.clearForm();
-            this.showAlert(response.data.message, response.data.error);
             // Yaa
 
             this.$session.start();
             this.$session.set("sharing", response.data.result);
-            this.$store.dispatch("SET_USER", response.data.u);
-            this.$router.push("/main");
+            this.$store.dispatch("SET_USER", response.data.user);
+            this.$router.push("/home");
           }, 2000);
         })
         .catch(err => {
@@ -101,8 +101,11 @@ export default {
             this.clearForm();
           }, 2000);
           if (err.response) {
-            const error = JSON.parse(err.response.data);
-            this.showAlert(error.message, error.error);
+            // const error = JSON.parse(err.response.data);
+            this.showAlert(
+              err.response.data.message + ".\n \n Please try again",
+              err.response.data.error
+            );
             console.log(err.response.status);
           } else if (err.request) {
             console.log(err.request);
@@ -118,6 +121,7 @@ export default {
     clearForm() {
       this.form.Email = "";
       this.form.Password = "";
+      document.getElementById("form").reset();
     },
     showAlert(message, error) {
       this.message = message;
