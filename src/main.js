@@ -33,5 +33,32 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
+  created: function() {
+    console.log("Vue App created!");
+    // console.log("This => ", this);
+    this.$http
+      .get("http://localhost:3000/api/user/check-cookie")
+      .then(response => {
+        if (!response.data.error) {
+          if (response.data.sessionExists) {
+            window.localStorage.setItem(
+              "Sharing",
+              JSON.stringify(response.data.session)
+            );
+          } else {
+            window.localStorage.removeItem("Sharing");
+            this.$router.push("/auth");
+          }
+          // console.log("Response => ", response.data);
+        } else {
+          console.log("Error => ", response.data);
+        }
+        // self.$set(this, "user", response);
+      })
+      .catch(err => {
+        console.log(err);
+        // Router.push("/");
+      });
+  }
 }).$mount("#app");

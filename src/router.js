@@ -17,8 +17,8 @@ export const router = new Router({
     {
       path: "/",
       component: Home,
-      redirect: "main",
-      children: [{ path: "main", name: "Main", component: Main }],
+      redirect: "home",
+      children: [{ path: "home", name: "Home", component: Main }],
       meta: {
         requiresAuth: true
       }
@@ -41,7 +41,14 @@ export const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(r => r.meta.requiresAuth)) {
-    if (!router.app.$session.exists()) {
+    // if (!router.app.$session.exists()) {
+    //   console.log("NO Session!");
+    //   next({ path: "/auth" });
+    // } else {
+    //   next();
+    // }
+    // Check if sharing object exists in localStorage
+    if (!window.localStorage.getItem("Sharing")) {
       console.log("NO Session!");
       next({ path: "/auth" });
     } else {

@@ -148,8 +148,9 @@ export default {
             this.disabled = false;
             this.clearForm();
             this.showAlert(response.data.message, response.data.error);
-            this.$session.start();
-            this.$session.set("sharing", response.result);
+            // this.$session.start();
+            // this.$session.set("sharing", response.result);
+            window.localStorage.getItem("Sharing");
             this.$store.dispatch("SET_USER", response.data.u);
             this.$router.push("/main");
           }, 2000);
@@ -217,5 +218,8 @@ export default {
 .form button {
   color: #d1ecf1 !important;
   background-color: palevioletred;
+}
+.form-control {
+  border-color: rgba(0, 0, 0, 0.125) !important;
 }
 </style>

@@ -36,15 +36,13 @@
             ></b-input>
           </b-form-group>
           <!-- Submit buttons -->
-          <b-button
-            block
+          <button
             type="submit"
-            variant="info"
             :disabled="disabled"
-            class="bg-dark-peach p-2 mt-4 w100"
+            class="btn d-block bg-dark-peach p-2 mt-4 w100 login-button"
           >
             Login
-          </b-button>
+          </button>
           <p class="mt-3 text-center" style="color: peach">
             <router-link class="mx-auto text-muted mt-3 text-center" to="join"
               >Signup instead</router-link
@@ -89,8 +87,9 @@ export default {
           setTimeout(() => {
             // Yaa
 
-            this.$session.start();
-            this.$session.set("sharing", response.data.result);
+            // this.$session.start();
+            window.localStorage.setItem("Sharing", response.data.result);
+            // this.$session.set("sharing", response.data.result);
             this.$store.dispatch("SET_USER", response.data.user);
             this.$router.push("/home");
           }, 2000);
@@ -146,11 +145,27 @@ export default {
 .form label {
   text-align: left !important;
 }
-.form button {
-  color: #ffffff !important;
-  background-color: palevioletred;
-}
 .text-center {
   text-align: center !important;
+}
+button.login-button {
+  color: #ffffff !important;
+  background-color: palevioletred;
+  font-weight: bold;
+  width: 100% !important;
+  border: 2px solid #c15b7c !important;
+  box-shadow: 0 0.2rem 0.5rem rgba(193, 91, 123, 0.514) !important;
+}
+
+button.login-button:focus,
+button.login-button:hover {
+  box-shadow: 0 0 0 0.2rem rgba(244, 176, 172, 0.75) !important;
+  border-color: #c15b7c !important;
+}
+.form-control {
+  border-color: rgba(244, 176, 172, 0.75) !important;
+}
+.form-control:focus {
+  box-shadow: 0 0 0 0.2rem rgba(244, 176, 172, 0.75) !important;
 }
 </style>

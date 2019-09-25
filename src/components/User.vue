@@ -39,7 +39,8 @@ export default {
         .get("http://localhost:3000/api/user/logout", { withCredentials: true })
         .then(res => {
           console.log(res.data.message);
-          this.$session.destroy();
+          // this.$session.destroy();
+          window.localStorage.removeItem("Sharing");
           this.$router.push("/auth");
         })
         .catch(err => {
