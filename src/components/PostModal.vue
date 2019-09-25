@@ -14,7 +14,7 @@
       </slot>
       <div>
         <b-tabs small v-model="tabIndex">
-          <b-tab title="Tab 1" ref="tab-1" title-item-class="disabledTab">
+          <b-tab title="Pick a type" ref="tab-1" title-item-class="disabledTab">
             <p>Pick a post type</p>
             <div id="post-type" class="d-flex justify-content-around">
               <div
@@ -42,7 +42,7 @@
             </div>
           </b-tab>
           <b-tab
-            title="Tab 2"
+            title="Select need"
             id="type"
             title-item-class="disabledTab"
             class="text-left"
@@ -175,9 +175,9 @@ export default {
       tabIndex: 0,
       post: {
         postmessage: "👋 Hi,",
-        offer: null,
-        request: null,
-        post_subject: null
+        offer: false,
+        request: false,
+        post_subject: ""
       }
     };
   },

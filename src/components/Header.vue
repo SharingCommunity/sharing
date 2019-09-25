@@ -52,6 +52,38 @@ export default {
 .new-post-button {
   background-color: rgb(223, 7, 50) !important;
   border: 2px solid rgb(223, 7, 50) !important;
+  box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17) !important;
+  padding: 0.5em 1.2em !important;
+  box-sizing: border-box;
+  position: relative;
+  transition: box-shadow 0.3s;
+}
+.new-post-button:active {
+  top: 0.1rem !important;
+  box-shadow: inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.4);
+}
+.btn-6 {
+display: inline-block;
+padding: 0.2em 1.2em;
+border-radius:0.15em;
+box-sizing: border-box;
+text-decoration: none;
+font-weight: 400;
+color: #FFFFFF;
+background-color: #3369ff;
+box-shadow: inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
+text-align: center;
+position: relative;
+border: none !important;
+}
+.btn-6:active{
+ top: 0.1em;
+}
+@media all and (max-width:30em){
+ .btn-6 {
+  display:block;
+  margin:0.4em auto;
+}
 }
 .brand {
   font-size: 20px;

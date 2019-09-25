@@ -1,13 +1,21 @@
 <template>
-  <div :id="id" class="mx-1 d-flex" :title="post.created | moment('from')">
+  <div :id="id" class="mx-1 d-flex" :title="post.createdAt | moment('from')">
     <div class="d-flex justify-content-between post-details px-1">
       <span>{{ post.offer | postType }}</span>
       <small class="text-muted"
-        >Posted {{ post.created | moment("from") }}</small
+        >Posted {{ post.createdAt | moment("from") }}</small
       >
     </div>
-    <p class="card-text my-1 align-self-center">{{ post.postmessage }}</p>
-    <div></div>
+    <div>
+      <div class="border-bottom">
+        {{
+          post.user.Username === this.$store.getters.USER.username
+            ? "You"
+            : post.user.Username
+        }}
+      </div>
+      <p class="card-text my-1 align-self-center">{{ post.postmessage }}</p>
+    </div>
   </div>
 </template>
 
@@ -17,9 +25,14 @@ export default {
   props: ["post", "id"],
   filters: {
     postType(type) {
-      return type == "offer" ? "OFFER" : "REQUEST";
+      return type ? "Offer" : "Request";
     }
   }
+  // computed: {
+  //   username: function(name) {
+  //     return name === this.$store.getters.USER.username ? "You" : name;
+  //   }
+  // }
 };
 </script>
 

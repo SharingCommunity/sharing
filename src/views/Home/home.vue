@@ -9,7 +9,7 @@
         </b-col>
         <b-col>
           <!-- <b-alert variant="success" show>Hello Guys!</b-alert> -->
-          <user-component :username="this.$store.getters.USER"></user-component>
+          <user-component :username="username"></user-component>
         </b-col>
       </b-row>
 
@@ -78,17 +78,19 @@ export default {
     count_down_changed(seconds) {
       this.dismissCountdown = seconds;
     },
-    getUserData() {
-      // let self = this;
-      // Axios.get("http://localhost:3000/api/connect")
-      //   .then(response => {
-      //     console.log(response.headers);
-      //     self.$set(this, "user", response);
-      //   })
-      //   .catch(err => {
-      //     console.log(err);
-      //     Router.push("/");
-      //   });
+    setUsername() {
+      const uname = JSON.parse(window.localStorage.getItem("Sharing")).username;
+      if (uname) {
+        this.$store.dispatch("SET_USERNAME", uname);
+      }
+    }
+  },
+  computed: {
+    username: function() {
+      return (
+        this.$store.getters.USER.Username ||
+        JSON.parse(window.localStorage.getItem("Sharing")).username
+      );
     }
   },
   mounted() {
@@ -118,6 +120,9 @@ export default {
       self.$store.dispatch("ADD_NEW_POST", post);
       console.log(post);
     });
+
+    this.setUsername();
+
     this.$socket.on("new_request", function(event) {
       self.show_alert(event, "request");
       self.$store.dispatch("ADD_EVENT", event);
