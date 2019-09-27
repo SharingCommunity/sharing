@@ -36,7 +36,7 @@ export default {
     logout() {
       console.log("Logged out!");
       axios
-        .get("http://localhost:3000/api/user/logout", { withCredentials: true })
+        .get("http://localhost:3000/app/logout", { withCredentials: true })
         .then(res => {
           console.log(res.data.message);
           // this.$session.destroy();

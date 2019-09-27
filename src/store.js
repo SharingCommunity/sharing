@@ -11,8 +11,10 @@ export default new Vuex.Store({
     posts: [],
     events: [],
     user: {
+      _id: "",
       username: "",
-      posts: []
+      Posts: [],
+      Connections: []
     }
   },
   getters: {
@@ -30,20 +32,21 @@ export default new Vuex.Store({
     SET_USER: (state, user) => {
       state.user = user;
     },
-    SET_USERNAME: (state, username) => {
-      state.user.username = username;
+    SET_USERNAME: (state, data) => {
+      state.user.username = data.username;
+      state.user._id = data._id;
     },
     ADD_POST: (state, post) => {
-      state.posts.push(post);
+      state.posts.unshift(post);
     },
     ADD_MY_POST: (state, post) => {
-      state.posts.push(post);
+      state.posts.unshift(post);
     },
     SET_POSTS: (state, payload) => {
       state.posts = payload;
     },
     ADD_EVENT: (state, event) => {
-      state.events.push(event);
+      state.events.unshift(event);
     }
   },
   actions: {
@@ -57,12 +60,21 @@ export default new Vuex.Store({
       const { data } = await Axios.get("http://localhost:3000/api/posts", {
         withCredentials: true
       });
-
       // console.log(Axios.get("http://localhost:3000/api/posts", {
       //   withCredentials: true
       // }).response);
       console.log("data =>", data.results);
       context.commit("SET_POSTS", data.results);
+    },
+    GET_USER: async context => {
+      const { data } = await Axios.get(
+        `http://localhost:3000/api/user/${context.state.user._id}`,
+        {
+          withCredentials: true
+        }
+      );
+      console.log("data =>", data.results);
+      context.commit("SET_USER", data.results);
     },
     ADD_POST: (context, post) => {
       context.commit("ADD_MY_POST", post);

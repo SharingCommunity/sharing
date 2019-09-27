@@ -9,7 +9,7 @@
         </b-col>
         <b-col>
           <!-- <b-alert variant="success" show>Hello Guys!</b-alert> -->
-          <user-component :username="username"></user-component>
+          <user-component></user-component>
         </b-col>
       </b-row>
 
@@ -78,21 +78,21 @@ export default {
     count_down_changed(seconds) {
       this.dismissCountdown = seconds;
     },
-    setUsername() {
-      const uname = JSON.parse(window.localStorage.getItem("Sharing")).username;
-      if (uname) {
-        this.$store.dispatch("SET_USERNAME", uname);
-      }
-    }
+    // setUsername() {
+    //   const data = JSON.parse(window.localStorage.getItem("Sharing"));
+    //   if (data.username) {
+    //     this.$store.dispatch("SET_USERNAME", data);
+    //   }
+    // }
   },
-  computed: {
-    username: function() {
-      return (
-        this.$store.getters.USER.Username ||
-        JSON.parse(window.localStorage.getItem("Sharing")).username
-      );
-    }
-  },
+  // computed: {
+  //   username: function() {
+  //     return (
+  //       this.$store.getters.USER.Username ||
+  //       JSON.parse(window.localStorage.getItem("Sharing")).username
+  //     );
+  //   }
+  // },
   mounted() {
     // window.onscroll = function(ev) {
     //   const windowScroll = ev.view.document.scrollingElement.scrollTop;
@@ -121,7 +121,7 @@ export default {
       console.log(post);
     });
 
-    this.setUsername();
+    // this.setUsername();
 
     this.$socket.on("new_request", function(event) {
       self.show_alert(event, "request");
@@ -131,6 +131,7 @@ export default {
       self.show_alert(event, "offer");
       self.$store.dispatch("ADD_EVENT", event);
     });
+    // this.$store.dispatch("GET_USER");
     this.$store.dispatch("SET_POSTS");
     // this.getUserData();
   }

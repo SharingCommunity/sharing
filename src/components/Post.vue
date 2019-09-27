@@ -9,9 +9,9 @@
     <div>
       <div class="border-bottom">
         {{
-          post.user.Username === this.$store.getters.USER.username
+          post.user.username === this.$store.getters.USER.username
             ? "You"
-            : post.user.Username
+            : post.user.username
         }}
       </div>
       <p class="card-text my-1 align-self-center">{{ post.postmessage }}</p>

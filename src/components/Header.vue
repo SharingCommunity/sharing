@@ -1,38 +1,10 @@
 <template>
   <div
-    class="alert p-1 sharing-blue-style d-flex justify-content-between"
+    class="text-center p-1"
     id="header"
   >
-    <!-- <div class="">
-      <div class="row">
-        <b-col>
-          <span class="brand">
-            <b>Sharing Logo Here</b>
-          </span>
-          <span>
-            Sharing helps you be a better person. :)
-          </span>
-        </b-col>
-      </div>
-      <div class="row">
-        <b-col>
-          <b-button
-            v-b-modal.modal1
-            aria-label="heavy plus sign"
-            title="✨Add new post"
-            variant="danger"
-            class="mx-1"
-            >New Post ✨</b-button
-          >
-        </b-col>
-      </div>
-    </div> -->
-    <div>
-      <b-button>back</b-button>
-      <span class="ml-3 p-2">&#127968; Home</span>
-    </div>
-    <h5 class="mb-0">Sharing App</h5>
-    <b-button class="new-post-button" v-b-modal.postmodal>New Post</b-button>
+    <h5 class="mb-0 text-bold">Sharing App</h5>
+    <!-- <b-button class="new-post-button" v-b-modal.postmodal>New Post</b-button> -->
   </div>
 </template>
 

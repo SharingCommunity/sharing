@@ -76,7 +76,7 @@ export default {
       this.disabled = true;
       axios
         .post(
-          "http://localhost:3000/api/user/login",
+          "http://localhost:3000/app/login",
           { data: this.form },
           { withCredentials: true }
         )

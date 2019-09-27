@@ -38,7 +38,7 @@ new Vue({
     console.log("Vue App created!");
     // console.log("This => ", this);
     this.$http
-      .get("http://localhost:3000/api/user/check-cookie")
+      .get("http://localhost:3000/app/check-cookie")
       .then(response => {
         if (!response.data.error) {
           if (response.data.sessionExists) {

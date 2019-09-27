@@ -10,6 +10,11 @@ export default {
     return {
       inSignup: false
     };
+  },
+  mounted() {
+    console.log("Cookies =>", this.$cookies.keys());
+    console.log("Cookies Windows =>", window.$cookies.keys());
+    console.log("Cookies :) =>", document.cookie);
   }
 };
 </script>

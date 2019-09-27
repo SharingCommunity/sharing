@@ -161,6 +161,10 @@ export default {
     },
     sendPost() {
       let post = {
+        user: {
+          _id: "",
+          username: this.$store.getters.USER.username
+        },
         postmessage: this.post.postmessage,
         request: this.post.request,
         offer: this.post.offer,
@@ -185,9 +189,9 @@ export default {
     tabIndex() {
       if (this.tabIndex == 0) {
         this.post.postmessage = "👋 Hi,";
-        this.post.offer = null;
-        this.post.request = null;
-        this.post.post_subject = null;
+        this.post.offer = false;
+        this.post.request = false;
+        this.post.post_subject = "";
       }
       // console.log("changed!");
     }
