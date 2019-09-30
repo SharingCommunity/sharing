@@ -2,19 +2,26 @@
   <div id="home">
     <b-container id="view" fluid>
       <b-row>
-        <b-col md="9">
+        <b-col md="9" sm="12">
           <div>
             <header-component></header-component>
           </div>
         </b-col>
-        <b-col>
-          <!-- <b-alert variant="success" show>Hello Guys!</b-alert> -->
+        <!-- <b-col>
+          <b-alert variant="success" show>Hello Guys!</b-alert>
           <user-component></user-component>
-        </b-col>
+        </b-col> -->
       </b-row>
 
       <b-row>
-        <b-col id="main-view" md="9" sm="12" order-md="1" order-sm="2">
+        <b-col
+          id="main-view"
+          class="mb-4"
+          md="9"
+          sm="12"
+          order-md="1"
+          order-sm="2"
+        >
           <router-view></router-view>
           <alert-component
             :message="alert_message"
@@ -24,8 +31,8 @@
             class="fixed-bottom"
           ></alert-component>
         </b-col>
-        <b-col
-          class="sidebar fixed-sidebar"
+        <!-- <b-col
+          class="sidebar fixed-sidebar d-none"
           id="sidebar-container"
           md="3"
           sm="12"
@@ -33,16 +40,16 @@
           order-sm="1"
         >
           <sidebar-component></sidebar-component>
-        </b-col>
+        </b-col> -->
       </b-row>
+      <fab></fab>
     </b-container>
   </div>
 </template>
 <script>
-import SidebarComponent from "../../components/Sidebar.vue";
 import HeaderComponent from "../../components/Header.vue";
-import UserComponent from "../../components/User.vue";
 import AlertComponent from "../../components/Alert.vue";
+import fab from "../../components/fab.vue";
 // import Axios from "axios";
 // import Router from "../../router.js";
 export default {
@@ -57,27 +64,26 @@ export default {
     };
   },
   components: {
-    SidebarComponent,
     HeaderComponent,
-    UserComponent,
-    AlertComponent
+    AlertComponent,
+    fab
   },
   methods: {
     show_alert(event, type) {
       this.dismissCountdown = this.dismissSeconds;
 
       switch (type) {
-        case "request":
-          this.alert_message = "A new request was made" + event._id;
+        case "ask":
+          this.alert_message = "A new ask was made" + event._id;
           break;
-        case "offer":
-          this.alert_message = "A new offer was made" + event._id;
+        case "give":
+          this.alert_message = "A new gift was made" + event._id;
           break;
       }
     },
     count_down_changed(seconds) {
       this.dismissCountdown = seconds;
-    },
+    }
     // setUsername() {
     //   const data = JSON.parse(window.localStorage.getItem("Sharing"));
     //   if (data.username) {
@@ -137,4 +143,25 @@ export default {
   }
 };
 </script>
-<style src="./home.css" scoped></style>
+<style scoped>
+.sidebar {
+  height: 100vh;
+}
+
+.fixed-sidebar {
+  position: fixed !important;
+  right: 0px !important;
+}
+/* 
+#main-view {
+  height: 80vh;
+  max-height: 80vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+} */
+#main-view {
+  /* border-radius: 8px; */
+  height: auto;
+  /* background-color: #d1ecf1; */
+}
+</style>
