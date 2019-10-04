@@ -6,11 +6,12 @@
       title="Add a new Post"
       class="postmodal"
       ref="postmodal"
+      @show="setMessage"
     >
       <!-- <b-input></b-input> -->
       <slot slot="modal-header">
         <p>💬</p>
-        <b-card class="w-100 postinput">{{ this.post.postmessage }}</b-card>
+        <b-card class="w-100 postinput">{{ this.post.message }}</b-card>
       </slot>
       <div>
         <b-tabs small v-model="tabIndex">
@@ -19,23 +20,23 @@
             <div id="post-type" class="d-flex justify-content-around">
               <div
                 class="border d-inline btn"
-                @click.stop="goNext($refs.request.id)"
-                ref="request"
-                id="request"
+                @click.stop="goNext($refs.ask.id)"
+                ref="ask"
+                id="ask"
               >
                 <p>
-                  <em>request</em>
+                  <em>ask</em>
                 </p>
                 <span>👐</span>
               </div>
               <div
                 class="border d-inline btn"
-                @click.stop="goNext($refs.offer.id)"
-                ref="offer"
-                id="offer"
+                @click.stop="goNext($refs.give.id)"
+                ref="give"
+                id="give"
               >
                 <p>
-                  <em>offer</em>
+                  <em>give</em>
                 </p>
                 <span>🎁</span>
               </div>
@@ -50,49 +51,95 @@
             <b-row class="py-2">
               <b-col>
                 <b-button @click="goNext($event.target.innerText)"
-                  >🥪 Food</b-button
+                  >Food 🥪</b-button
                 >
               </b-col>
               <b-col>
                 <b-button @click="goNext($event.target.innerText)"
-                  >📚 Assignment</b-button
+                  >Assignment 📚</b-button
                 >
               </b-col>
               <b-col>
                 <b-button @click="goNext($event.target.innerText)"
-                  >💕 Care</b-button
+                  >Care 💕</b-button
                 >
               </b-col>
             </b-row>
             <b-row class="py-2">
               <b-col>
                 <b-button @click="goNext($event.target.innerText)"
-                  >🙏 Prayer</b-button
+                  >Prayer 🙏</b-button
                 >
               </b-col>
               <b-col>
                 <b-button @click="goNext($event.target.innerText)"
-                  >💲 Money</b-button
+                  >Money 💲</b-button
                 >
               </b-col>
             </b-row>
           </b-tab>
-          <b-tab title="Send Post" id="4" title-item-class="disabledTab">
-            <p>Review your post, when you're ready hit send!</p>
-            <p>
+          <b-tab title="Add Details" id="4" title-item-class="disabledTab">
+            <b-alert variant="warning" show dismissible>
+              <p>Please add some more details like:</p>
+              <ul>
+                <li>What kind of food do you want?</li>
+                <li>Where can they get it? e.g Room 106 EE</li>
+                <li>How much money?</li>
+              </ul>
+              <p>Anything to make it easier for everyone :)</p>
+            </b-alert>
+
+            <div class="form-group">
+              <label>Details</label>
+              <textarea
+                class="sharing-border form-control"
+                autofocus
+                v-model="post.details"
+              ></textarea>
+            </div>
+            <!-- <b-button
+            class="p-2"
+              variant="info"
+              @click="
+                () => {
+                  tabIndex++;
+                }
+              "
+              >Next</b-button
+            > -->
+
+            <!-- <p>
               <b-card class="w-100 postinput">{{
-                this.post.postmessage
+                this.post.message
               }}</b-card>
-            </p>
+            </p> -->
+          </b-tab>
+          <b-tab title="Send Post" id="5" title-item-class="disabledTab">
+            <p>Review your post, when you're ready hit send!</p>
+            <!-- <p>
+              <b-card class="w-100 postinput">{{
+                this.post.message
+              }}</b-card>
+            </p> -->
           </b-tab>
         </b-tabs>
       </div>
       <slot slot="modal-footer">
         <b-button @click="closeModal">Cancel</b-button>
-        <b-button @click="sendPost()" variant="success" v-show="tabIndex == 2"
+        <b-button
+          @click="
+            () => {
+              tabIndex++;
+            }
+          "
+          variant="info"
+          v-show="tabIndex == 2"
+          >Next</b-button
+        >
+        <b-button @click="tabIndex--" v-show="tabIndex == 3">Back</b-button>
+        <b-button @click="sendPost()" variant="success" v-show="tabIndex == 3"
           >Send</b-button
         >
-        <!-- <b-button @click="()=>{tabIndex++}">Next</b-button> -->
       </slot>
     </b-modal>
   </div>
@@ -109,51 +156,41 @@ export default {
     goNext(stage) {
       // Match choice
       switch (stage) {
-        case "request":
-          this.post.postmessage = this.post.postmessage.concat(
-            " I need help with"
-          );
-          this.post.post_subject = "request";
-          this.post.request = true;
+        case "ask":
+          this.post.message = this.post.message.concat(" I need help with");
+          this.post.subject = "ask";
+          this.post.asking = true;
           this.tabIndex++;
           break;
-        case "offer":
-          this.post.postmessage = this.post.postmessage.concat(
-            " I can help with"
-          );
-          this.post.post_subject = "offer";
-          this.post.offer = true;
+        case "give":
+          this.post.message = this.post.message.concat(" I can help with");
+          this.post.subject = "give";
+          this.post.giving = true;
           this.tabIndex++;
           break;
-        case "🥪 Food":
-          this.post.postmessage = this.post.postmessage.concat(" some 🥪 Food");
-          this.post.post_subject = "food";
+        case "Food 🥪":
+          this.post.message = this.post.message.concat(" some Food 🥪");
+          this.post.subject = "food";
           this.tabIndex++;
           break;
-        case "📚 Assignment":
-          this.post.postmessage = this.post.postmessage.concat(
-            " 📚 Assignment"
-          );
-          this.post.post_subject = "assignment";
+        case "Assignment 📚":
+          this.post.message = this.post.message.concat(" Assignment 📚");
+          this.post.subject = "assignment";
           this.tabIndex++;
           break;
-        case "💕 Care":
-          this.post.postmessage = this.post.postmessage.concat(" 💕 Care");
-          this.post.post_subject = "care";
+        case "Care 💕":
+          this.post.message = this.post.message.concat(" Care 💕");
+          this.post.subject = "care";
           this.tabIndex++;
           break;
-        case "🙏 Prayer":
-          this.post.postmessage = this.post.postmessage.concat(
-            " some 🙏 Prayer"
-          );
-          this.post.post_subject = "prayer";
+        case "Prayer 🙏":
+          this.post.message = this.post.message.concat(" some Prayer 🙏");
+          this.post.subject = "prayer";
           this.tabIndex++;
           break;
-        case "💲 Money":
-          this.post.postmessage = this.post.postmessage.concat(
-            " some 💲 Money"
-          );
-          this.post.post_subject = "money";
+        case "Money 💲":
+          this.post.message = this.post.message.concat(" some Money 💲");
+          this.post.subject = "money";
           this.tabIndex++;
           break;
       }
@@ -161,37 +198,50 @@ export default {
     },
     sendPost() {
       let post = {
-        user: {
-          _id: "",
-          username: this.$store.getters.USER.username
-        },
-        postmessage: this.post.postmessage,
-        request: this.post.request,
-        offer: this.post.offer,
-        post_subject: this.post.post_subject
+        message: this.post.message,
+        asking: this.post.asking,
+        giving: this.post.giving,
+        participants: [],
+        subject: this.post.subject,
+        user: this.$store.getters.USER,
+        details: this.post.details
       };
       this.$socket.emit("post", post);
       this.closeModal();
+    },
+    setMessage() {
+      this.post.message = this.greetings[Math.round(Math.random() * 6)];
     }
   },
   data() {
     return {
       tabIndex: 0,
+      greetings: [
+        "👋 Hi,",
+        "👋 How far,",
+        "👋 Hey,",
+        "👋 Hello friend,",
+        "👋 Senu,",
+        "👋 Hi Hi,",
+        "👋 Holla,"
+      ],
       post: {
-        postmessage: "👋 Hi,",
-        offer: false,
-        request: false,
-        post_subject: ""
+        message: "👋 Hi,",
+        giving: false,
+        asking: false,
+        subject: "",
+        details: ""
       }
     };
   },
   watch: {
     tabIndex() {
       if (this.tabIndex == 0) {
-        this.post.postmessage = "👋 Hi,";
-        this.post.offer = false;
-        this.post.request = false;
-        this.post.post_subject = "";
+        this.post.message = "👋 Hi,";
+        this.post.giving = false;
+        this.post.asking = false;
+        this.post.subject = "";
+        this.post.details = "";
       }
       // console.log("changed!");
     }
@@ -257,5 +307,8 @@ export default {
 }
 .disabledTab {
   pointer-events: none;
+}
+div > .nav-tabs {
+  display: none !important;
 }
 </style>

@@ -1,20 +1,39 @@
 <template>
-  <div :id="id" class="mx-1 d-flex" :title="post.createdAt | moment('from')">
-    <div class="d-flex justify-content-between post-details px-1">
-      <span>{{ post.offer | postType }}</span>
-      <small class="text-muted"
-        >Posted {{ post.createdAt | moment("from") }}</small
-      >
+  <div
+    @click="$emit('open-post')"
+    :id="id"
+    class="mx-1 card d-flex"
+    :title="post.createdAt | moment('from')"
+  >
+    <!-- <div class="d-flex justify-content-between post-details px-1">
+      <span class="badge">{{ post.giving | postType }}</span>
+    </div> -->
+    <div class="p-2">
+      <p class="card-text my-1 align-self-center">
+        {{ post.message }}
+      </p>
     </div>
-    <div>
-      <div class="border-bottom">
+    <div class="card-footer d-flex justify-content-between">
+      <span class="badge blue-style "
+        ><i>{{ post.giving | postType }}</i></span
+      >
+      <!-- <small class="text-muted"
+        >Posted {{ post.createdAt | moment("from") }}</small
+      > -->
+      <small class="text-muted">
+        Expires in
+        <!-- {{
+          this.$moment(post.createdAt)
+            .add(12, "hours")
+            .diff(post.createdAt, true)
+        }} -->
         {{
-          post.user.username === this.$store.getters.USER.username
-            ? "You"
-            : post.user.username
+          this.$moment(post.createdAt)
+            .add(12, "hours")
+            .diff(this.$moment(), "hours")
         }}
-      </div>
-      <p class="card-text my-1 align-self-center">{{ post.postmessage }}</p>
+        hours
+      </small>
     </div>
   </div>
 </template>
@@ -25,12 +44,12 @@ export default {
   props: ["post", "id"],
   filters: {
     postType(type) {
-      return type ? "Offer" : "Request";
+      return type ? "Giving" : "Asking";
     }
   }
   // computed: {
-  //   username: function(name) {
-  //     return name === this.$store.getters.USER.username ? "You" : name;
+  //   postStyle: function() {
+  //     return this.post.given ? "blue-style" : "red-style";
   //   }
   // }
 };
@@ -42,12 +61,19 @@ export default {
   background-color: #ffffff;
   overflow: auto;
   border-radius: 8px !important;
-  height: 100px;
-  max-height: 130px;
+  /* height: 100px; */
+  /* max-height: 130px; */
   max-width: 100%;
   border: 3px solid #bee5eb;
   cursor: pointer;
   transition: border 0.2s ease-out;
+}
+.no-click {
+  user-select: none;
+}
+.action-button {
+  widows: 50px;
+  height: 50px;
 }
 .post p {
   font-size: 20px;
@@ -66,5 +92,8 @@ export default {
 }
 .post:hover .post-details {
   background-color: #ffb2b2;
+}
+.post .card-footer {
+  border-color: #bee5eb !important;
 }
 </style>
