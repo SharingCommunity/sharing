@@ -6,8 +6,8 @@ import store from "./store";
 import BootstrapVue from "bootstrap-vue";
 import moment from "vue-moment";
 import VueSocketIo from "vue-socket-io";
-import VueSessions from "vue-session";
 import VueCookies from "vue-cookies";
+import EvaIcons from "vue-eva-icons";
 // import socketio from "socket.io-client";
 
 import "bootstrap/dist/css/bootstrap.css";
@@ -17,11 +17,12 @@ Vue.use(moment);
 Vue.use(BootstrapVue);
 Vue.use(VueRouter);
 Vue.use(VueCookies);
+Vue.use(EvaIcons);
 // Vue.use(Axios);
 // Vue.use(socketio);
 
-Vue.use(VueSocketIo, "http://localhost:3000");
-Vue.use(VueSessions, { key: "connect.sid" });
+Vue.use(VueSocketIo, "http://10.3.44.75:3000");
+// Vue.use(VueSessions, { key: "connect.sid" });
 
 // Axios binding
 
@@ -35,10 +36,19 @@ new Vue({
   store,
   render: h => h(App),
   created: function() {
-    console.log("Vue App created!");
+    console.log("Vue App created!", navigator.platform);
     // console.log("This => ", this);
+
+    const session = JSON.parse(window.localStorage.getItem("Sharing"));
+
     this.$http
-      .get("http://localhost:3000/app/check-cookie")
+      .post(
+        "http://10.3.44.75:3000/app/check-cookie",
+        { user: "random user", online: navigator.onLine, session },
+        {
+          withCredentials: true
+        }
+      )
       .then(response => {
         if (!response.data.error) {
           if (response.data.sessionExists) {
@@ -48,7 +58,6 @@ new Vue({
             );
           } else {
             window.localStorage.removeItem("Sharing");
-            this.$router.push("/auth");
           }
           // console.log("Response => ", response.data);
         } else {
