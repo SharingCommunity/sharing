@@ -139,7 +139,7 @@ export default {
       this.disabled = true;
       axios
         .post(
-          "http://localhost:3000/app/join",
+          "http://10.3.44.75:3000/app/join",
           { data: this.form },
           { withCredentials: true }
         )

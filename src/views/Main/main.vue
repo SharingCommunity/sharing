@@ -11,31 +11,42 @@
           :post="post"
           :id="post._id"
           class="post"
-          v-b-modal.viewpostmodal
-          @click="console.log('activePost => ', post)"
+          @open-post="openPost(post)"
         ></post-component>
       </div>
     </div>
     <post-modal></post-modal>
-    <view-post :post="activePost"></view-post>
   </div>
 </template>
 
 <script>
 import PostComponent from "../../components/Post.vue";
 import PostModal from "../../components/PostModal.vue";
-import ViewPost from "../../components/ViewPost.vue";
 export default {
   name: "Main",
   components: {
     PostComponent,
-    PostModal,
-    ViewPost
+    PostModal
   },
   data() {
     return {
       activePost: ""
     };
+  },
+  methods: {
+    openPost(post) {
+      if (
+        post.status === "Sharing is Ongoing" &&
+        post.participants.some(u => {
+          u === this.$store.getters.USER;
+        })
+      ) {
+        // this.$router.push({ name: "Post", params: { id } });
+        console.log("Can't open post bro ");
+      } else if (post.status === "Pending Sharing") {
+        this.$router.push({ name: "Post", params: { id: post.id } });
+      }
+    }
   }
 };
 </script>

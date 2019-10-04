@@ -7,6 +7,7 @@ import Main from "./views/Main/main.vue";
 import Auth from "./views/Auth/auth.vue";
 import Login from "./views/Auth/login.vue";
 import Signup from "./views/Auth/signup.vue";
+import ViewPost from "./views/ViewPost.vue";
 
 Vue.use(Router);
 
@@ -35,30 +36,39 @@ export const router = new Router({
       meta: {
         guest: true
       }
+    },
+    {
+      path: "/post/:id",
+      component: ViewPost,
+      name: "Post",
+      meta: {
+        guest: true
+      },
+      props: true
     }
   ]
 });
 
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(r => r.meta.requiresAuth)) {
-    // if (!router.app.$session.exists()) {
-    //   console.log("NO Session!");
-    //   next({ path: "/auth" });
-    // } else {
-    //   next();
-    // }
-    // Check if sharing object exists in localStorage
-    if (!window.localStorage.getItem("Sharing")) {
-      console.log("NO Session!");
-      next({ path: "/auth" });
-    } else {
-      next();
-    }
-  } else if (to.matched.some(r => r.meta.guest)) {
-    next();
-  } else {
-    next();
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   if (to.matched.some(r => r.meta.requiresAuth)) {
+//     // if (!router.app.$session.exists()) {
+//     //   console.log("NO Session!");
+//     //   next({ path: "/auth" });
+//     // } else {
+//     //   next();
+//     // }
+//     // Check if sharing object exists in localStorage
+//     if (!window.localStorage.getItem("Sharing")) {
+//       console.log("NO Session!");
+//       next({ path: "/auth" });
+//     } else {
+//       next();
+//     }
+//   } else if (to.matched.some(r => r.meta.guest)) {
+//     next();
+//   } else {
+//     next();
+//   }
+// });
 
 export default router;
