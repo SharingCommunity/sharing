@@ -23,13 +23,9 @@ export default {
   name: "Navbar"
 };
 </script>
-<style scoped>
+<style>
 .navbar {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
-}
-.bg-solid {
-  /* background-color: white; */
-  background-color: #20c997;
 }
 .notifs {
   cursor: pointer;

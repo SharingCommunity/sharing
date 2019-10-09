@@ -1,7 +1,7 @@
 <template>
   <div
     id="user-component"
-    class="alert d-flex justify-content-between mb-0 p-1 sharing-blue-style"
+    class="alert d-flex justify-content-between mb-0 p-1 blue-style "
   >
     <div class="d-flex user-block align-items-center">
       <!-- <div class="avatar bg-red"></div> -->
@@ -36,7 +36,7 @@ export default {
     logout() {
       console.log("Logged out!");
       axios
-        .get("http://localhost:3000/app/logout", { withCredentials: true })
+        .get("http://10.3.91.21:3000/app/logout", { withCredentials: true })
         .then(res => {
           console.log(res.data.message);
           // this.$session.destroy();

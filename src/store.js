@@ -40,9 +40,6 @@ export default new Vuex.Store({
     ADD_POST: (state, post) => {
       state.posts.unshift(post);
     },
-    ADD_MY_POST: (state, post) => {
-      state.posts.unshift(post);
-    },
     SET_POSTS: (state, payload) => {
       state.posts = payload;
     },
@@ -51,6 +48,9 @@ export default new Vuex.Store({
     },
     UPDATE_POST: (state, payload) => {
       state[payload.index] = payload.post;
+    },
+    ADD_CHAT: (state, payload) => {
+      state[payload.index].chats.push(payload.chat);
     }
   },
   actions: {
@@ -61,10 +61,10 @@ export default new Vuex.Store({
       context.commit("SET_USERNAME", username);
     },
     SET_POSTS: async context => {
-      const { data } = await Axios.get("http://10.3.44.75:3000/api/posts", {
+      const { data } = await Axios.get("http://10.3.91.21:3000/api/posts", {
         withCredentials: true
       });
-      // console.log(Axios.get("http://10.3.44.75:3000/api/posts", {
+      // console.log(Axios.get("http://10.3.91.21:3000/api/posts", {
       //   withCredentials: true
       // }).response);
       console.log("data =>", data.results);
@@ -72,7 +72,7 @@ export default new Vuex.Store({
     },
     GET_USER: async context => {
       const { data } = await Axios.get(
-        `http://10.3.44.75:3000/api/user/${context.state.user._id}`,
+        `http://10.3.91.21:3000/api/user/${context.state.user._id}`,
         {
           withCredentials: true
         }
@@ -81,9 +81,6 @@ export default new Vuex.Store({
       context.commit("SET_USER", data.results);
     },
     ADD_POST: (context, post) => {
-      context.commit("ADD_MY_POST", post);
-    },
-    ADD_NEW_POST: (context, post) => {
       context.commit("ADD_POST", post);
     },
     ADD_EVENT: (context, event) => {
@@ -92,6 +89,10 @@ export default new Vuex.Store({
     UPDATE_POST: (context, post) => {
       const index = context.getters.POST_ID(post._id);
       context.commit("UPDATE_POST", { index, post });
+    },
+    ADD_CHAT: (context, chat) => {
+      let index = context.getters.POST_ID(chat.post);
+      context.commit("ADD_CHAT", { index, chat });
     }
   }
 });

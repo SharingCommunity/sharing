@@ -15,13 +15,16 @@
 }
 body {
   background-color: #f9f9f9;
-  overflow-x: hidden;
-  overflow-y: hidden;
 }
 
-.sharing-blue-style {
+.blue-style {
   background-color: #d1ecf1 !important;
   border: 2px solid #bee5eb !important;
+}
+
+.red-style {
+  background-color: #ffb2b2 !important;
+  border: 2px solid #f79292 !important;
 }
 
 .sharing-blue-text {
@@ -34,4 +37,8 @@ body {
 
 .w100 {
   height: 100% !important;
+}
+.bg-solid {
+  /* background-color: white; */
+  background-color: #20c997;
 }

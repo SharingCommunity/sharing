@@ -1,6 +1,7 @@
 <template>
   <div id="home">
-    <b-container id="view" fluid>
+    <navbar-component></navbar-component>
+    <b-container class="mt-extra" id="view" fluid>
       <b-row>
         <b-col md="9" sm="12">
           <div>
@@ -49,6 +50,7 @@
 <script>
 import HeaderComponent from "../../components/Header.vue";
 import AlertComponent from "../../components/Alert.vue";
+import NavbarComponent from "./Navbar.vue";
 import fab from "../../components/fab.vue";
 // import Axios from "axios";
 // import Router from "../../router.js";
@@ -66,12 +68,11 @@ export default {
   components: {
     HeaderComponent,
     AlertComponent,
+    NavbarComponent,
     fab
   },
   methods: {
     show_alert(event, type) {
-      this.dismissCountdown = this.dismissSeconds;
-
       switch (type) {
         case "ask":
           this.alert_message = "A new ask was made" + event._id;
@@ -79,17 +80,24 @@ export default {
         case "give":
           this.alert_message = "A new gift was made" + event._id;
           break;
+        case "chat":
+          this.alert_message = "New message on one of your posts";
+          break;
       }
+
+      this.dismissCountdown = this.dismissSeconds;
     },
     count_down_changed(seconds) {
       this.dismissCountdown = seconds;
+    },
+    setSession() {
+      if (window.localStorage.getItem("Sharing")) {
+        this.$store.dispatch(
+          "SET_USER",
+          JSON.parse(window.localStorage.getItem("Sharing").userID)
+        );
+      }
     }
-    // setUsername() {
-    //   const data = JSON.parse(window.localStorage.getItem("Sharing"));
-    //   if (data.username) {
-    //     this.$store.dispatch("SET_USERNAME", data);
-    //   }
-    // }
   },
   // computed: {
   //   username: function() {
@@ -115,16 +123,39 @@ export default {
     //   }
     // };
 
+    this.setSession();
+
     let self = this;
     this.$socket.on("connect", function() {
       console.log("Connected!");
     });
-    this.$socket.on("post", function(post) {
-      self.$store.dispatch("ADD_POST", post);
+    this.$socket.on("chat", function(chat) {
+      // self.$store.dispatch("ADD_CHAT", chat);
+      console.log("Sent chat", chat);
     });
+
+    this.$socket.on("new_message", function(chat) {
+      self.show_alert(event, "chat");
+      console.log(
+        "You have a new message on one of your connected posts",
+        chat
+      );
+      self.$store.dispatch("ADD_CHAT", chat);
+    });
+
+    this.$socket.on("EVENT", function(event) {
+      console.log("New Event => ", event);
+      self.$store.dispatch("ADD_EVENT", event);
+    });
+
+    this.$socket.on("post_updated", function(post) {
+      console.log("Your post is now active!");
+      self.$store.dispatch("UPDATE_POST", post);
+    });
+
     this.$socket.on("new_post", function(post) {
-      self.$store.dispatch("ADD_NEW_POST", post);
-      console.log(post);
+      self.$store.dispatch("ADD_POST", post);
+      // console.log(post);
     });
 
     // this.setUsername();
@@ -146,6 +177,10 @@ export default {
 <style scoped>
 .sidebar {
   height: 100vh;
+}
+
+.mt-extra {
+  margin-top: 4rem !important;
 }
 
 .fixed-sidebar {

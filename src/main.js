@@ -21,7 +21,7 @@ Vue.use(EvaIcons);
 // Vue.use(Axios);
 // Vue.use(socketio);
 
-Vue.use(VueSocketIo, "http://10.3.44.75:3000");
+Vue.use(VueSocketIo, "http://10.3.91.21:3000");
 // Vue.use(VueSessions, { key: "connect.sid" });
 
 // Axios binding
@@ -38,13 +38,20 @@ new Vue({
   created: function() {
     console.log("Vue App created!", navigator.platform);
     // console.log("This => ", this);
+    let userID;
+    let sessionID;
 
-    const session = JSON.parse(window.localStorage.getItem("Sharing"));
+    let obj = JSON.parse(window.localStorage.getItem("Sharing"));
+
+    if (obj) {
+      userID = obj.userID;
+      sessionID = obj.sessionID;
+    }
 
     this.$http
       .post(
-        "http://10.3.44.75:3000/app/check-cookie",
-        { user: "random user", online: navigator.onLine, session },
+        "http://10.3.91.21:3000/app/check-cookie",
+        { userID, online: navigator.onLine, sessionID },
         {
           withCredentials: true
         }
@@ -54,10 +61,14 @@ new Vue({
           if (response.data.sessionExists) {
             window.localStorage.setItem(
               "Sharing",
-              JSON.stringify(response.data.session)
+              JSON.stringify({
+                userID: response.data.user.userID,
+                sessionID: response.data.user.sessionID
+              })
             );
           } else {
             window.localStorage.removeItem("Sharing");
+            console.log("Erro log =>", response.data.error);
           }
           // console.log("Response => ", response.data);
         } else {

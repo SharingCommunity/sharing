@@ -44,7 +44,7 @@ export default {
         // this.$router.push({ name: "Post", params: { id } });
         console.log("Can't open post bro ");
       } else if (post.status === "Pending Sharing") {
-        this.$router.push({ name: "Post", params: { id: post.id } });
+        this.$router.push({ name: "Post", params: { id: post._id } });
       }
     }
   }
