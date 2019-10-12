@@ -94,19 +94,39 @@ export default {
       if (window.localStorage.getItem("Sharing")) {
         this.$store.dispatch(
           "SET_USER",
-          JSON.parse(window.localStorage.getItem("Sharing").userID)
+          JSON.parse(window.localStorage.getItem("Sharing")).userID
         );
       }
+    },
+    handleMessage: function(chat) {
+      self.show_alert(event, "chat");
+      console.log(
+        "You have a new message on one of your connected posts",
+        chat
+      );
+      this.$store.dispatch("ADD_CHAT", chat);
+    },
+    handleNewEvent: function(event) {
+      console.log("New Event => ", event);
+      this.$store.dispatch("ADD_EVENT", event);
+    },
+    handleNewPost: function(post) {
+      console.log("Inside New Post, Vue Instance =>", this);
+      this.$store.dispatch("ADD_POST", post);
+      // console.log(post);
+    },
+    removeAllListeners: function() {
+      console.log("Removing Listeners");
+      this.$socket.removeListener("new_message", this.handleMessage);
+
+      this.$socket.removeListener("EVENT", this.handleNewEvent);
+
+      this.$socket.removeListener("new_post", this.handleNewPost);
     }
   },
-  // computed: {
-  //   username: function() {
-  //     return (
-  //       this.$store.getters.USER.Username ||
-  //       JSON.parse(window.localStorage.getItem("Sharing")).username
-  //     );
-  //   }
-  // },
+  created() {
+    console.log("#Home Component Created =>", this);
+  },
   mounted() {
     // window.onscroll = function(ev) {
     //   const windowScroll = ev.view.document.scrollingElement.scrollTop;
@@ -125,52 +145,30 @@ export default {
 
     this.setSession();
 
-    let self = this;
+    // turn off specific listeners when destroying component...
+
     this.$socket.on("connect", function() {
       console.log("Connected!");
     });
-    this.$socket.on("chat", function(chat) {
-      // self.$store.dispatch("ADD_CHAT", chat);
-      console.log("Sent chat", chat);
-    });
 
-    this.$socket.on("new_message", function(chat) {
-      self.show_alert(event, "chat");
-      console.log(
-        "You have a new message on one of your connected posts",
-        chat
-      );
-      self.$store.dispatch("ADD_CHAT", chat);
-    });
+    // Sockets with named listeners
+    this.$socket.on("new_message", this.handleMessage);
 
-    this.$socket.on("EVENT", function(event) {
-      console.log("New Event => ", event);
-      self.$store.dispatch("ADD_EVENT", event);
-    });
+    this.$socket.on("EVENT", this.handleNewEvent);
 
-    this.$socket.on("post_updated", function(post) {
-      console.log("Your post is now active!");
-      self.$store.dispatch("UPDATE_POST", post);
-    });
-
-    this.$socket.on("new_post", function(post) {
-      self.$store.dispatch("ADD_POST", post);
-      // console.log(post);
-    });
+    this.$socket.on("new_post", this.handleNewPost);
 
     // this.setUsername();
 
-    this.$socket.on("new_request", function(event) {
-      self.show_alert(event, "request");
-      self.$store.dispatch("ADD_EVENT", event);
-    });
-    this.$socket.on("new_offer", function(event) {
-      self.show_alert(event, "offer");
-      self.$store.dispatch("ADD_EVENT", event);
-    });
     // this.$store.dispatch("GET_USER");
     this.$store.dispatch("SET_POSTS");
     // this.getUserData();
+  },
+  beforeDestroy() {
+    this.removeAllListeners();
+  },
+  destroyed() {
+    console.log("Home Component Destroyed =>", this);
   }
 };
 </script>

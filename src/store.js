@@ -39,6 +39,7 @@ export default new Vuex.Store({
     },
     ADD_POST: (state, post) => {
       state.posts.unshift(post);
+      // console.log("ADD_POST =>", post);
     },
     SET_POSTS: (state, payload) => {
       state.posts = payload;
@@ -47,10 +48,14 @@ export default new Vuex.Store({
       state.events.unshift(event);
     },
     UPDATE_POST: (state, payload) => {
-      state[payload.index] = payload.post;
+      Vue.set(state.posts, payload.index, payload.post);
+      // state.posts[payload.index] = payload.post;
     },
     ADD_CHAT: (state, payload) => {
-      state[payload.index].chats.push(payload.chat);
+      state.posts[payload.index].chats.push(payload.chat);
+    },
+    SET_EVENTS: (state, payload) => {
+      state.events = payload;
     }
   },
   actions: {
@@ -70,9 +75,26 @@ export default new Vuex.Store({
       console.log("data =>", data.results);
       context.commit("SET_POSTS", data.results);
     },
+    FETCH_EVENTS: async context => {
+      let userID = context.state.user;
+      console.log("userID =>", context.state.user);
+      if (!context.state.user) {
+        userID = JSON.parse(window.localStorage.getItem("Sharing")).userID;
+      }
+
+      const { data } = await Axios.get(
+        `http://10.3.91.21:3000/api/user/${userID}/events`,
+        {
+          withCredentials: true
+        }
+      );
+
+      console.log("User Events", data.results);
+      context.commit("SET_EVENTS", data.results);
+    },
     GET_USER: async context => {
       const { data } = await Axios.get(
-        `http://10.3.91.21:3000/api/user/${context.state.user._id}`,
+        `http://10.3.91.21:3000/api/user/${context.state.user}`,
         {
           withCredentials: true
         }

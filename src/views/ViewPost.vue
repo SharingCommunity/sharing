@@ -42,7 +42,7 @@
             </chat>
           </div>
 
-          <div class="shadow-sm fixed-bottom">
+          <div class="shadow-sm">
             <b-input-group size="lg" class="mt-3">
               <b-form-input v-model="message" autofocus></b-form-input>
               <b-input-group-append>
@@ -65,7 +65,9 @@
             <b-button @click="startSharing" class="mb-3" variant="success" block
               >Yes</b-button
             >
-            <b-button variant="secondary" block>Nah</b-button>
+            <b-button variant="secondary" @click="goBackHome" block
+              >Nah</b-button
+            >
           </b-card-body>
         </b-card>
 
@@ -75,7 +77,9 @@
             <b-button @click="startSharing" class="mb-3" variant="success" block
               >Yes</b-button
             >
-            <b-button variant="secondary" block>Nah</b-button>
+            <b-button variant="secondary" @click="goBackHome" block
+              >Nah</b-button
+            >
           </b-card-body>
         </b-card>
       </div>
@@ -85,6 +89,8 @@
 <script>
 import Post from "../components/Post.vue";
 import Chat from "../components/Chat.vue";
+import store from "../store.js";
+
 export default {
   name: "ViewPost",
   components: {
@@ -94,24 +100,32 @@ export default {
   props: ["id"],
   data() {
     return {
-      post: "",
       message: "",
       sameUser: false
     };
   },
+  computed: {
+    post() {
+      return store.getters.POST(this.id);
+    }
+  },
   methods: {
     close() {
       this.$router.back();
+    },
+    goBackHome() {
+      this.$router.push("/home");
     },
     sendChat() {
       let chat = {
         message: this.message,
         post: this.post._id,
         from: this.$store.getters.USER,
-        to: this.post.user,
+        participants: this.post.participants,
         time: new Date()
       };
       this.$socket.emit("chat", chat);
+      this.message = "";
     },
     startSharing() {
       this.$socket.emit("start-sharing", this.post._id);
@@ -122,11 +136,34 @@ export default {
       return this.post.participants.some(p => {
         return p === this.$store.getters.USER;
       });
+    },
+    handlePostUpdate: function(post) {
+      console.log("Your post is now active!", this);
+      this.$store.dispatch("UPDATE_POST", post);
+    },
+    handleNewChat: function(chat) {
+      this.$store.dispatch("ADD_CHAT", chat);
+      console.log("New Chat", chat);
     }
   },
   mounted() {
-    this.post = this.$store.getters.POST(this.id);
+    // this.post = this.$store.getters.POST(this.id);
+    if (!this.$store.getters.POSTS) {
+      this.$store.dispatch("SET_POSTS");
+    }
     this.sameUser = this.post.user === this.$store.getters.USER;
+
+    this.$socket.on("post_updated", this.handlePostUpdate);
+
+    this.$socket.on("chat", this.handleNewChat);
+  },
+  beforeDestroy() {
+    this.$socket.removeListener("post_updated", this.handlePostUpdate);
+
+    this.$socket.removeListener("chat", this.handleNewChat);
+  },
+  destroyed() {
+    console.log("ViewPost component Just destroyed :)");
   }
 };
 </script>

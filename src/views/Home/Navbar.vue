@@ -7,7 +7,7 @@
       Sharing
     </b-navbar-brand>
     <div>
-      <div class="notifs close">
+      <div class="notifs close" @click="goToEvents">
         <eva-icon
           name="bell-outline"
           fill="white"
@@ -20,7 +20,12 @@
 </template>
 <script>
 export default {
-  name: "Navbar"
+  name: "Navbar",
+  methods: {
+    goToEvents() {
+      this.$router.push("/events");
+    }
+  }
 };
 </script>
 <style>
