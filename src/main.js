@@ -6,7 +6,6 @@ import store from "./store";
 import BootstrapVue from "bootstrap-vue";
 import moment from "vue-moment";
 import VueSocketIo from "vue-socket-io";
-import VueCookies from "vue-cookies";
 import EvaIcons from "vue-eva-icons";
 // import socketio from "socket.io-client";
 
@@ -16,13 +15,11 @@ import Axios from "axios";
 Vue.use(moment);
 Vue.use(BootstrapVue);
 Vue.use(VueRouter);
-Vue.use(VueCookies);
 Vue.use(EvaIcons);
 // Vue.use(Axios);
 // Vue.use(socketio);
 
 Vue.use(VueSocketIo, "http://10.3.91.21:3000");
-// Vue.use(VueSessions, { key: "connect.sid" });
 
 // Axios binding
 
