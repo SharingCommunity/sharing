@@ -207,6 +207,8 @@ export default {
         details: this.post.details
       };
       this.$socket.emit("post", post);
+      // this.$store
+      this.$store.dispatch("ADD_POST", post);
       this.closeModal();
     },
     setMessage() {

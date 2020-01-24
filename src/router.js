@@ -12,6 +12,25 @@ import ViewEvents from "./views/ViewEvents.vue";
 
 Vue.use(Router);
 
+// const host = window.location.host;
+// const parts = host.split('.');
+// const domainLength = 3; // route1.example.com => domain length = 3
+
+// const router = () => {
+//   let routes;
+//   if (parts.length === (domainLength - 1) || parts[0] === 'www') {
+//     routes = index;
+//   } else if (parts[0] === 'route1') {
+//     routes = route1;
+//   } else if (parts[0] === 'route2') {
+//     routes = route2;
+//   } else {
+//     // If you want to do something else just comment the line below
+//     routes = index;
+//   }
+//   return routes;
+// };
+
 export const router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
