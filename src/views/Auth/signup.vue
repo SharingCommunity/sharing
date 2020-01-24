@@ -139,7 +139,7 @@ export default {
       this.disabled = true;
       axios
         .post(
-          "http://localhost:3000/app/join",
+          "https://still-wave-87560.herokuapp.com/app/join",
           { data: this.form },
           { withCredentials: true }
         )

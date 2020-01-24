@@ -76,7 +76,7 @@ export default {
       this.disabled = true;
       axios
         .post(
-          "http://localhost:3000/app/login",
+          "https://still-wave-87560.herokuapp.com/app/login",
           { data: this.form },
           { withCredentials: true }
         )

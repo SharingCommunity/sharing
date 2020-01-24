@@ -36,7 +36,9 @@ export default {
     logout() {
       console.log("Logged out!");
       axios
-        .get("http://localhost:3000/app/logout", { withCredentials: true })
+        .get("https://still-wave-87560.herokuapp.com/app/logout", {
+          withCredentials: true
+        })
         .then(res => {
           console.log(res.data.message);
           // this.$session.destroy();

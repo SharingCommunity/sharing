@@ -21,7 +21,7 @@ Vue.use(EvaIcons);
 
 Vue.use(
   new VueSocketIo({
-    connection: "http://localhost:3000"
+    connection: "https://still-wave-87560.herokuapp.com"
   })
 );
 
@@ -51,7 +51,7 @@ new Vue({
 
     this.$http
       .post(
-        "http://localhost:3000/app/check-cookie",
+        "https://still-wave-87560.herokuapp.com/app/check-cookie",
         { userID, online: navigator.onLine, sessionID },
         {
           withCredentials: true
