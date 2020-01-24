@@ -113,7 +113,7 @@ export default {
     handleNewPost: function(post) {
       console.log("Inside New Post, Vue Instance =>", this);
       this.$store.dispatch("ADD_POST", post);
-      // console.log(post);
+      console.log(post);
     },
     removeAllListeners: function() {
       console.log("Removing Listeners");

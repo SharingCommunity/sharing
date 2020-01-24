@@ -207,6 +207,7 @@ export default {
         details: this.post.details
       };
       this.$socket.emit("post", post);
+      console.log("Inside here =>", post);
       // this.$store
       this.$store.dispatch("ADD_POST", post);
       this.closeModal();
