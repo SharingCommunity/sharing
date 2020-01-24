@@ -5,7 +5,7 @@ import VueRouter from "vue-router";
 import store from "./store";
 import BootstrapVue from "bootstrap-vue";
 import moment from "vue-moment";
-import VueSocketIo from "vue-socket-io";
+import VueSocketIo from "vue-socket.io";
 import EvaIcons from "vue-eva-icons";
 // import socketio from "socket.io-client";
 
@@ -19,7 +19,11 @@ Vue.use(EvaIcons);
 // Vue.use(Axios);
 // Vue.use(socketio);
 
-Vue.use(VueSocketIo, "http://10.3.91.21:3000");
+Vue.use(
+  new VueSocketIo({
+    connection: "http://localhost:3000"
+  })
+);
 
 // Axios binding
 
@@ -47,7 +51,7 @@ new Vue({
 
     this.$http
       .post(
-        "http://10.3.91.21:3000/app/check-cookie",
+        "http://localhost:3000/app/check-cookie",
         { userID, online: navigator.onLine, sessionID },
         {
           withCredentials: true

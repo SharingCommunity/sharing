@@ -66,10 +66,10 @@ export default new Vuex.Store({
       context.commit("SET_USERNAME", username);
     },
     SET_POSTS: async context => {
-      const { data } = await Axios.get("http://10.3.91.21:3000/api/posts", {
+      const { data } = await Axios.get("http://localhost:3000/api/posts", {
         withCredentials: true
       });
-      // console.log(Axios.get("http://10.3.91.21:3000/api/posts", {
+      // console.log(Axios.get("http://localhost:3000/api/posts", {
       //   withCredentials: true
       // }).response);
       console.log("data =>", data.results);
@@ -83,7 +83,7 @@ export default new Vuex.Store({
       }
 
       const { data } = await Axios.get(
-        `http://10.3.91.21:3000/api/user/${userID}/events`,
+        `http://localhost:3000/api/user/${userID}/events`,
         {
           withCredentials: true
         }
@@ -94,7 +94,7 @@ export default new Vuex.Store({
     },
     GET_USER: async context => {
       const { data } = await Axios.get(
-        `http://10.3.91.21:3000/api/user/${context.state.user}`,
+        `http://localhost:3000/api/user/${context.state.user}`,
         {
           withCredentials: true
         }
