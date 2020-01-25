@@ -70,7 +70,7 @@ new Vue({
             );
           } else {
             window.localStorage.removeItem("Sharing");
-            console.log("Erro log =>", response.data.error);
+            console.log("Error =>", response.data.error);
           }
           // console.log("Response => ", response.data);
         } else {

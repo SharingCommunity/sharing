@@ -209,7 +209,6 @@ export default {
       this.$socket.emit("post", post);
       console.log("Inside here =>", post);
       // this.$store
-      this.$store.dispatch("ADD_POST", post);
       this.closeModal();
     },
     setMessage() {
@@ -224,7 +223,7 @@ export default {
         "👋 How far,",
         "👋 Hey,",
         "👋 Hello friend,",
-        "👋 Senu,",
+        "👋 Sannu,",
         "👋 Hi Hi,",
         "👋 Holla,"
       ],

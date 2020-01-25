@@ -36,15 +36,14 @@ export default {
   methods: {
     openPost(post) {
       if (
-        post.status === "Sharing Ongoing" &&
+        post.status === "ongoing" &&
         post.participants.some(u => {
           return u === this.$store.getters.USER;
         })
       ) {
         // this.$router.push({ name: "Post", params: { id } });
         this.$router.push({ name: "Post", params: { id: post._id } });
-        console.log("Can't open post bro ");
-      } else if (post.status === "Pending Sharing") {
+      } else if (post.status === "pending") {
         this.$router.push({ name: "Post", params: { id: post._id } });
       } else {
         console.log("Can't open post bro");
