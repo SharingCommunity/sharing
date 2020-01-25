@@ -3,12 +3,31 @@
     class="text-white shadow-sm bg-solid py-1 justify-content-between"
     fixed="top"
   >
-    <b-navbar-brand>
+    <b-navbar-brand class="text-white">
       Sharing
     </b-navbar-brand>
     <div>
-      <div class="notifs close" @click="goToEvents">
+      <div class="notifs nav-icon">
+        <b-dropdown size="sm" variant="link" :toggle-class="classes" no-caret>
+          <template v-slot:button-content>
+            <eva-icon
+              name="more-vertical-outline"
+              fill="white"
+              width="25px"
+              height="25px"
+            ></eva-icon>
+          </template>
+          <b-dropdown-item href="#">Your Posts</b-dropdown-item>
+          <b-dropdown-item href="#">WTF is this</b-dropdown-item>
+        </b-dropdown>
+      </div>
+      <div class="notifs nav-icon opacity" @click="goToEvents">
+        <b-badge v-if="$store.getters.EVENTS.length > 0" variant="light">{{
+          $store.getters.EVENTS.length
+        }}</b-badge>
         <eva-icon
+          v-b-tooltip.hover
+          title="Events"
           name="bell-outline"
           fill="white"
           width="25px"
@@ -21,6 +40,11 @@
 <script>
 export default {
   name: "Navbar",
+  data() {
+    return {
+      classes: ["text-decoration-none", "p-0", "pl-2", "opacity"]
+    };
+  },
   methods: {
     goToEvents() {
       this.$router.push("/events");
@@ -34,5 +58,28 @@ export default {
 }
 .notifs {
   cursor: pointer;
+}
+
+.nav-icon {
+  float: right;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+}
+
+.nav-icon:hover,
+.nav-icon:active {
+  opacity: 1 !important;
+  transition: opacity 0.2s ease-in;
+}
+
+.opacity-normal {
+  opacity: 1 !important;
+}
+
+.opacity {
+  opacity: 0.5 !important;
 }
 </style>
