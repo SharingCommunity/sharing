@@ -20,7 +20,10 @@
       <hr class="mb-4" />
 
       <div v-for="ev in $store.getters.EVENTS" :key="ev._id">
-        <event-component :event="ev"></event-component>
+        <event-component
+          @view-event="handleEvent(ev)"
+          :event="ev"
+        ></event-component>
       </div>
     </div>
   </div>
@@ -35,6 +38,11 @@ export default {
   methods: {
     back() {
       this.$router.back();
+    },
+    handleEvent(event) {
+      if (event.type == 2 || event.type == 1) {
+        this.$router.push({ name: "Post", params: { id: event.post } });
+      }
     }
   },
   mounted() {

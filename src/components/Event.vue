@@ -1,5 +1,5 @@
 <template>
-  <div id="event" class="event my-2">
+  <div id="event" class="event my-2" @click="$emit('view-event')">
     <h5 v-if="event.type === 1">
       One of your posts has been updated
     </h5>

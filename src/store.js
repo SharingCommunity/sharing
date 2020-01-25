@@ -45,7 +45,7 @@ export default new Vuex.Store({
     SET_POSTS: (state, payload) => {
       state.posts = payload;
     },
-    ADD_EVENT: (state, event) => {
+    NEW_EVENT: (state, event) => {
       state.events.unshift(event);
     },
     UPDATE_POST: (state, payload) => {
@@ -70,10 +70,6 @@ export default new Vuex.Store({
       const { data } = await Axios.get(`${API}/api/posts`, {
         withCredentials: true
       });
-      // console.log(Axios.get(`${API}/api/posts`, {
-      //   withCredentials: true
-      // }).response);
-      console.log("data =>", data.results);
       context.commit("SET_POSTS", data.results);
     },
     FETCH_EVENTS: async context => {
@@ -103,7 +99,7 @@ export default new Vuex.Store({
     ADD_POST: (context, post) => {
       context.commit("ADD_POST", post);
     },
-    ADD_EVENT: (context, event) => {
+    NEW_EVENT: (context, event) => {
       context.commit("NEW_EVENT", event);
     },
     UPDATE_POST: (context, post) => {
