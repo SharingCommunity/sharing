@@ -110,6 +110,9 @@ export default {
       console.log("New Event => ", event);
       this.$store.dispatch("ADD_EVENT", event);
     },
+    handleSocketConnection: function(event) {
+      console.log("Socket Connected! =>", event);
+    },
     handleNewPost: function(post) {
       console.log("Inside New Post, Vue Instance =>", this);
       this.$store.dispatch("ADD_POST", post);
@@ -122,6 +125,8 @@ export default {
       this.$socket.removeListener("EVENT", this.handleNewEvent);
 
       this.$socket.removeListener("new_post", this.handleNewPost);
+
+      this.$socket.removeListener("connect", this.handleSocketConnection);
     }
   },
   created() {
@@ -147,9 +152,7 @@ export default {
 
     // turn off specific listeners when destroying component...
 
-    this.$socket.on("connect", function() {
-      console.log("Connected!");
-    });
+    this.$socket.on("connect", this.handleSocketConnection);
 
     // Sockets with named listeners
     this.$socket.on("new_message", this.handleMessage);

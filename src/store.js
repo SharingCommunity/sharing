@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import Axios from "axios";
+import API from "./config.js";
 
 Axios.defaults.withCredentials = true;
 
@@ -66,13 +67,10 @@ export default new Vuex.Store({
       context.commit("SET_USERNAME", username);
     },
     SET_POSTS: async context => {
-      const { data } = await Axios.get(
-        "https://still-wave-87560.herokuapp.com/api/posts",
-        {
-          withCredentials: true
-        }
-      );
-      // console.log(Axios.get("https://still-wave-87560.herokuapp.com/api/posts", {
+      const { data } = await Axios.get(`${API}/api/posts`, {
+        withCredentials: true
+      });
+      // console.log(Axios.get(`${API}/api/posts`, {
       //   withCredentials: true
       // }).response);
       console.log("data =>", data.results);
@@ -85,19 +83,16 @@ export default new Vuex.Store({
         userID = JSON.parse(window.localStorage.getItem("Sharing")).userID;
       }
 
-      const { data } = await Axios.get(
-        `https://still-wave-87560.herokuapp.com/api/user/${userID}/events`,
-        {
-          withCredentials: true
-        }
-      );
+      const { data } = await Axios.get(`${API}/api/user/${userID}/events`, {
+        withCredentials: true
+      });
 
       console.log("User Events", data.results);
       context.commit("SET_EVENTS", data.results);
     },
     GET_USER: async context => {
       const { data } = await Axios.get(
-        `https://still-wave-87560.herokuapp.com/api/user/${context.state.user}`,
+        `${API}/api/user/${context.state.user}`,
         {
           withCredentials: true
         }

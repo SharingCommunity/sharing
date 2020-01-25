@@ -4,8 +4,8 @@ module.exports = {
   configureWebpack: {
     plugins: [
       new BundleAnalyzerPlugin({
-        analyzerMode: "disabled",
-        generateStatsFile: true
+        analyzerMode: "disabled"
+        // generateStatsFile: true
       })
     ]
   }

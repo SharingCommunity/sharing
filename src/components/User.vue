@@ -30,13 +30,14 @@
 </template>
 <script>
 import axios from "axios";
+import API from "../../config.js";
 export default {
   props: ["username"],
   methods: {
     logout() {
       console.log("Logged out!");
       axios
-        .get("https://still-wave-87560.herokuapp.com/app/logout", {
+        .get(`${API}/app/logout`, {
           withCredentials: true
         })
         .then(res => {

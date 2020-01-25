@@ -12,6 +12,7 @@ import EvaIcons from "vue-eva-icons";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import Axios from "axios";
+import API from "./config.js";
 Vue.use(moment);
 Vue.use(BootstrapVue);
 Vue.use(VueRouter);
@@ -21,7 +22,7 @@ Vue.use(EvaIcons);
 
 Vue.use(
   new VueSocketIo({
-    connection: "https://still-wave-87560.herokuapp.com"
+    connection: `${API}`
   })
 );
 
@@ -51,7 +52,7 @@ new Vue({
 
     this.$http
       .post(
-        "https://still-wave-87560.herokuapp.com/app/check-cookie",
+        `${API}/app/check-cookie`,
         { userID, online: navigator.onLine, sessionID },
         {
           withCredentials: true
