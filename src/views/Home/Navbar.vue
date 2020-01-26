@@ -5,6 +5,7 @@
   >
     <b-navbar-brand class="text-white">
       Sharing
+      <b-badge variant="secondary" class="text-size: small" pill>alpha</b-badge>
     </b-navbar-brand>
     <div>
       <div class="notifs nav-icon">
