@@ -38,12 +38,7 @@
           <h3>Chat</h3>
           <p class="text-muted">Start typing to chat</p>
           <transition-group name="bounce" tag="div">
-            <chat
-              v-for="chat in post.chats"
-              :chat="chat"
-              :key="chat._id"
-              class="list-item"
-            >
+            <chat v-for="chat in post.chats" :chat="chat" :key="chat._id">
             </chat>
           </transition-group>
 
@@ -117,8 +112,10 @@ export default {
   sockets: {
     post_updated: function(post) {
       this.$store.dispatch("UPDATE_POST", post);
+      console.log("Post updated");
     },
     new_chat: function(chat) {
+      console.log('New Chat o')
       this.$store.dispatch("ADD_CHAT", chat);
     }
   },
@@ -142,7 +139,6 @@ export default {
     },
     startSharing() {
       this.$socket.emit("start_sharing", this.post._id);
-      console.log("Sharing =>", this.post._id);
     },
     isParticipant() {
       return this.post.participants.some(p => {
@@ -189,10 +185,6 @@ export default {
 }
 .close:active {
   background-color: rgba(000, 000, 000, 0.4) !important;
-}
-.list-item {
-  display: inline-block;
-  margin-right: 10px;
 }
 .list-enter-active,
 .list-leave-active {
