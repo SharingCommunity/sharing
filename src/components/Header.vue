@@ -4,16 +4,21 @@
     <p class="lead">
       Look around and start sharing 💕
     </p>
-    <p class="alert alert-success">
+    <b-alert variant="success" show dismissible>
       Showing Latest posts from the last 12 hours
-    </p>
+    </b-alert>
     <!-- <b-button class="new-post-button" v-b-modal.postmodal>New Post</b-button> -->
   </div>
 </template>
 
 <script>
 export default {
-  name: "HeaderComponent"
+  name: "HeaderComponent",
+  data() {
+    return {
+      showAlert: true
+    };
+  }
 };
 </script>
 

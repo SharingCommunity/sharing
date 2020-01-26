@@ -95,6 +95,7 @@
                 class="sharing-border form-control"
                 autofocus
                 v-model="post.details"
+                v-on:keyup.prevent.enter="tabIndex++"
               ></textarea>
             </div>
             <!-- <b-button
@@ -198,7 +199,7 @@ export default {
     },
     sendPost() {
       let post = {
-        message: this.post.message,
+        message: this.post.message.trim(),
         asking: this.post.asking,
         giving: this.post.giving,
         participants: [],
@@ -207,8 +208,6 @@ export default {
         details: this.post.details
       };
       this.$socket.emit("post", post);
-      console.log("Inside here =>", post);
-      // this.$store
       this.closeModal();
     },
     setMessage() {
@@ -225,7 +224,9 @@ export default {
         "👋 Hello friend,",
         "👋 Sannu,",
         "👋 Hi Hi,",
-        "👋 Holla,"
+        "👋 Holla,",
+        "👋 Hello,",
+        "👋 Hiii,"
       ],
       post: {
         message: "👋 Hi,",

@@ -84,6 +84,9 @@ export default {
     new_event: function(event) {
       this.makeToast(false, event.message, "New Message!");
       this.$store.dispatch("NEW_EVENT", event);
+    },
+    new_chat: function(chat) {
+      this.$store.dispatch("ADD_CHAT", chat);
     }
   },
   methods: {
@@ -91,7 +94,9 @@ export default {
       this.$bvToast.toast(message, {
         title,
         autoHideDelay: 5000,
-        appendToast: append
+        solid: true,
+        appendToast: append,
+        variant: "success"
       });
     },
     count_down_changed(seconds) {

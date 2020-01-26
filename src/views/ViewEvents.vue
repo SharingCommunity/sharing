@@ -18,7 +18,6 @@
     <div class="container-fluid">
       <h5>Showing your latest events</h5>
       <hr class="mb-4" />
-
       <div v-for="ev in $store.getters.EVENTS" :key="ev._id">
         <event-component
           @view-event="handleEvent(ev)"

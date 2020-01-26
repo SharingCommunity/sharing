@@ -9,7 +9,7 @@ import VueSocketIo from "vue-socket.io";
 import EvaIcons from "vue-eva-icons";
 // import socketio from "socket.io-client";
 
-import "bootstrap/dist/css/bootstrap.css";
+// import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import Axios from "axios";
 import API from "./config.js";
@@ -17,8 +17,6 @@ Vue.use(moment);
 Vue.use(BootstrapVue);
 Vue.use(VueRouter);
 Vue.use(EvaIcons);
-// Vue.use(Axios);
-// Vue.use(socketio);
 
 Vue.use(
   new VueSocketIo({

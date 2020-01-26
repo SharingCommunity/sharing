@@ -37,10 +37,15 @@
         <div v-if="isParticipant && post.status === 'ongoing'">
           <h3>Chat</h3>
           <p class="text-muted">Start typing to chat</p>
-          <div>
-            <chat v-for="chat in post.chats" :chat="chat" :key="chat._id">
+          <transition-group name="bounce" tag="div">
+            <chat
+              v-for="chat in post.chats"
+              :chat="chat"
+              :key="chat._id"
+              class="list-item"
+            >
             </chat>
-          </div>
+          </transition-group>
 
           <div class="shadow-sm">
             <b-input-group size="lg" class="mt-3">
@@ -55,7 +60,7 @@
         <!-- If its the same user -->
         <b-card v-else-if="sameUser && post.status === 'pending'">
           <b-card-body>
-            Sorry you can't chat open your post until someone responds to it
+            Sorry you can't chat until someone responds to your post
           </b-card-body>
         </b-card>
 
@@ -184,5 +189,17 @@ export default {
 }
 .close:active {
   background-color: rgba(000, 000, 000, 0.4) !important;
+}
+.list-item {
+  display: inline-block;
+  margin-right: 10px;
+}
+.list-enter-active,
+.list-leave-active {
+  transition: all 1s;
+}
+.list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateY(30px);
 }
 </style>

@@ -46,7 +46,11 @@ export default {
       } else if (post.status === "pending") {
         this.$router.push({ name: "Post", params: { id: post._id } });
       } else {
-        console.log("Can't open post bro");
+        this.$bvToast.toast("This post is already in progress", {
+          title: "Woops! Can't view post",
+          solid: true,
+          variant: "info"
+        });
       }
     }
   }
