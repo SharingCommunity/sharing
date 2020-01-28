@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import Axios from "axios";
+import API from "./config.js";
 
 Axios.defaults.withCredentials = true;
 
@@ -44,7 +45,7 @@ export default new Vuex.Store({
     SET_POSTS: (state, payload) => {
       state.posts = payload;
     },
-    ADD_EVENT: (state, event) => {
+    NEW_EVENT: (state, event) => {
       state.events.unshift(event);
     },
     UPDATE_POST: (state, payload) => {
@@ -66,13 +67,9 @@ export default new Vuex.Store({
       context.commit("SET_USERNAME", username);
     },
     SET_POSTS: async context => {
-      const { data } = await Axios.get("http://localhost:3000/api/posts", {
+      const { data } = await Axios.get(`${API}/api/posts`, {
         withCredentials: true
       });
-      // console.log(Axios.get("http://localhost:3000/api/posts", {
-      //   withCredentials: true
-      // }).response);
-      console.log("data =>", data.results);
       context.commit("SET_POSTS", data.results);
     },
     FETCH_EVENTS: async context => {
@@ -82,19 +79,16 @@ export default new Vuex.Store({
         userID = JSON.parse(window.localStorage.getItem("Sharing")).userID;
       }
 
-      const { data } = await Axios.get(
-        `http://localhost:3000/api/user/${userID}/events`,
-        {
-          withCredentials: true
-        }
-      );
+      const { data } = await Axios.get(`${API}/api/user/${userID}/events`, {
+        withCredentials: true
+      });
 
       console.log("User Events", data.results);
       context.commit("SET_EVENTS", data.results);
     },
     GET_USER: async context => {
       const { data } = await Axios.get(
-        `http://localhost:3000/api/user/${context.state.user}`,
+        `${API}/api/user/${context.state.user}`,
         {
           withCredentials: true
         }
@@ -105,7 +99,7 @@ export default new Vuex.Store({
     ADD_POST: (context, post) => {
       context.commit("ADD_POST", post);
     },
-    ADD_EVENT: (context, event) => {
+    NEW_EVENT: (context, event) => {
       context.commit("NEW_EVENT", event);
     },
     UPDATE_POST: (context, post) => {

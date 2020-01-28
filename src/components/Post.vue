@@ -14,7 +14,7 @@
       </p>
     </div>
     <div class="card-footer d-flex justify-content-between">
-      <span class="badge blue-style "
+      <span class="badge" v-bind:class="postStyle"
         ><i>{{ post.giving | postType }}</i></span
       >
       <!-- <small class="text-muted"
@@ -46,12 +46,12 @@ export default {
     postType(type) {
       return type ? "Giving" : "Asking";
     }
+  },
+  computed: {
+    postStyle: function() {
+      return this.post.giving ? "red-style" : "blue-style";
+    }
   }
-  // computed: {
-  //   postStyle: function() {
-  //     return this.post.given ? "blue-style" : "red-style";
-  //   }
-  // }
 };
 </script>
 

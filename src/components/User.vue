@@ -30,13 +30,16 @@
 </template>
 <script>
 import axios from "axios";
+import API from "../../config.js";
 export default {
   props: ["username"],
   methods: {
     logout() {
       console.log("Logged out!");
       axios
-        .get("http://localhost:3000/app/logout", { withCredentials: true })
+        .get(`${API}/app/logout`, {
+          withCredentials: true
+        })
         .then(res => {
           console.log(res.data.message);
           // this.$session.destroy();

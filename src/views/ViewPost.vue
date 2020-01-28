@@ -34,13 +34,13 @@
         <p>{{ post.details || "No description :(" }}</p>
 
         <hr />
-        <div v-if="isParticipant && post.status === 'Sharing Ongoing'">
+        <div v-if="isParticipant && post.status === 'ongoing'">
           <h3>Chat</h3>
           <p class="text-muted">Start typing to chat</p>
-          <div>
+          <transition-group name="bounce" tag="div">
             <chat v-for="chat in post.chats" :chat="chat" :key="chat._id">
             </chat>
-          </div>
+          </transition-group>
 
           <div class="shadow-sm">
             <b-input-group size="lg" class="mt-3">
@@ -53,9 +53,9 @@
         </div>
 
         <!-- If its the same user -->
-        <b-card v-else-if="sameUser && post.status === 'Pending Sharing'">
+        <b-card v-else-if="sameUser && post.status === 'pending'">
           <b-card-body>
-            Sorry you can't chat open your post until someone responds to it
+            Sorry you can't chat until someone responds to your post
           </b-card-body>
         </b-card>
 
@@ -109,6 +109,16 @@ export default {
       return store.getters.POST(this.id);
     }
   },
+  sockets: {
+    post_updated: function(post) {
+      this.$store.dispatch("UPDATE_POST", post);
+      console.log("Post updated");
+    },
+    new_chat: function(chat) {
+      console.log('New Chat o')
+      this.$store.dispatch("ADD_CHAT", chat);
+    }
+  },
   methods: {
     close() {
       this.$router.back();
@@ -128,22 +138,12 @@ export default {
       this.message = "";
     },
     startSharing() {
-      this.$socket.emit("start-sharing", this.post._id);
-      // TODO:
-      // Recieve response from server then change the status of post to 'Ongoing Sharing'
+      this.$socket.emit("start_sharing", this.post._id);
     },
     isParticipant() {
       return this.post.participants.some(p => {
         return p === this.$store.getters.USER;
       });
-    },
-    handlePostUpdate: function(post) {
-      console.log("Your post is now active!", this);
-      this.$store.dispatch("UPDATE_POST", post);
-    },
-    handleNewChat: function(chat) {
-      this.$store.dispatch("ADD_CHAT", chat);
-      console.log("New Chat", chat);
     }
   },
   mounted() {
@@ -152,10 +152,6 @@ export default {
       this.$store.dispatch("SET_POSTS");
     }
     this.sameUser = this.post.user === this.$store.getters.USER;
-
-    this.$socket.on("post_updated", this.handlePostUpdate);
-
-    this.$socket.on("chat", this.handleNewChat);
   },
   beforeDestroy() {
     this.$socket.removeListener("post_updated", this.handlePostUpdate);
@@ -189,5 +185,13 @@ export default {
 }
 .close:active {
   background-color: rgba(000, 000, 000, 0.4) !important;
+}
+.list-enter-active,
+.list-leave-active {
+  transition: all 1s;
+}
+.list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateY(30px);
 }
 </style>

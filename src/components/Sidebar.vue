@@ -5,7 +5,7 @@
     }}</b-alert> -->
     <div class="h100">
       <b-tabs fill pills>
-        <b-tab v-b-tooltip.hpver title="Posts" class="text-bold" active>
+        <b-tab v-b-tooltip.hover title="Posts" class="text-bold" active>
           <template v-slot:title>
             <!-- Uncomment for emoji label -->
             <!-- &#127880; &nbsp; -->

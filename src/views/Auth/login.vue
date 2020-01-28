@@ -56,6 +56,7 @@
 <script>
 import axios from "axios";
 import { setTimeout } from "timers";
+import API from "../../config.js";
 export default {
   data() {
     return {
@@ -76,7 +77,7 @@ export default {
       this.disabled = true;
       axios
         .post(
-          "http://localhost:3000/app/login",
+          `${API}/app/login`,
           { data: this.form },
           { withCredentials: true }
         )

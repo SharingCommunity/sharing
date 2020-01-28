@@ -114,6 +114,7 @@
 </template>
 <script>
 // import Axios from 'axios';
+import API from "../../config.js";
 import { setTimeout } from "timers";
 import axios from "axios";
 export default {
@@ -138,11 +139,7 @@ export default {
       evt.preventDefault();
       this.disabled = true;
       axios
-        .post(
-          "http://localhost:3000/app/join",
-          { data: this.form },
-          { withCredentials: true }
-        )
+        .post(`${API}/app/join`, { data: this.form }, { withCredentials: true })
         .then(response => {
           setTimeout(() => {
             this.disabled = false;

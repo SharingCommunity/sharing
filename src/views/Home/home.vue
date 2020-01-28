@@ -52,8 +52,6 @@ import HeaderComponent from "../../components/Header.vue";
 import AlertComponent from "../../components/Alert.vue";
 import NavbarComponent from "./Navbar.vue";
 import fab from "../../components/fab.vue";
-// import Axios from "axios";
-// import Router from "../../router.js";
 export default {
   name: "Home",
   data() {
@@ -71,21 +69,35 @@ export default {
     NavbarComponent,
     fab
   },
+  sockets: {
+    event: function(data) {
+      console.log("New Event => ", data);
+      this.$store.dispatch("ADD_EVENT", data);
+    },
+    connect: function() {
+      console.log("Socket Connected!");
+    },
+    new_post: function(post) {
+      this.$store.dispatch("ADD_POST", post);
+      console.log("New Post!");
+    },
+    new_event: function(event) {
+      this.makeToast(false, event.message, "New Message!");
+      this.$store.dispatch("NEW_EVENT", event);
+    },
+    new_chat: function(chat) {
+      this.$store.dispatch("ADD_CHAT", chat);
+    }
+  },
   methods: {
-    show_alert(event, type) {
-      switch (type) {
-        case "ask":
-          this.alert_message = "A new ask was made" + event._id;
-          break;
-        case "give":
-          this.alert_message = "A new gift was made" + event._id;
-          break;
-        case "chat":
-          this.alert_message = "New message on one of your posts";
-          break;
-      }
-
-      this.dismissCountdown = this.dismissSeconds;
+    makeToast(append = false, message, title) {
+      this.$bvToast.toast(message, {
+        title,
+        autoHideDelay: 5000,
+        solid: true,
+        appendToast: append,
+        variant: "success"
+      });
     },
     count_down_changed(seconds) {
       this.dismissCountdown = seconds;
@@ -97,35 +109,10 @@ export default {
           JSON.parse(window.localStorage.getItem("Sharing")).userID
         );
       }
-    },
-    handleMessage: function(chat) {
-      self.show_alert(event, "chat");
-      console.log(
-        "You have a new message on one of your connected posts",
-        chat
-      );
-      this.$store.dispatch("ADD_CHAT", chat);
-    },
-    handleNewEvent: function(event) {
-      console.log("New Event => ", event);
-      this.$store.dispatch("ADD_EVENT", event);
-    },
-    handleNewPost: function(post) {
-      console.log("Inside New Post, Vue Instance =>", this);
-      this.$store.dispatch("ADD_POST", post);
-      // console.log(post);
-    },
-    removeAllListeners: function() {
-      console.log("Removing Listeners");
-      this.$socket.removeListener("new_message", this.handleMessage);
-
-      this.$socket.removeListener("EVENT", this.handleNewEvent);
-
-      this.$socket.removeListener("new_post", this.handleNewPost);
     }
   },
   created() {
-    console.log("#Home Component Created =>", this);
+    console.log("Home Component Created =>", this);
   },
   mounted() {
     // window.onscroll = function(ev) {
@@ -145,27 +132,11 @@ export default {
 
     this.setSession();
 
-    // turn off specific listeners when destroying component...
-
-    this.$socket.on("connect", function() {
-      console.log("Connected!");
-    });
-
-    // Sockets with named listeners
-    this.$socket.on("new_message", this.handleMessage);
-
-    this.$socket.on("EVENT", this.handleNewEvent);
-
-    this.$socket.on("new_post", this.handleNewPost);
-
     // this.setUsername();
 
     // this.$store.dispatch("GET_USER");
     this.$store.dispatch("SET_POSTS");
     // this.getUserData();
-  },
-  beforeDestroy() {
-    this.removeAllListeners();
   },
   destroyed() {
     console.log("Home Component Destroyed =>", this);
