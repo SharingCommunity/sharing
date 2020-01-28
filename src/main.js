@@ -36,8 +36,6 @@ new Vue({
   store,
   render: h => h(App),
   created: function() {
-    console.log("Vue App created!", navigator.platform);
-    // console.log("This => ", this);
     let userID;
     let sessionID;
 

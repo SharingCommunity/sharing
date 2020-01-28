@@ -115,7 +115,7 @@ export default {
       console.log("Post updated");
     },
     new_chat: function(chat) {
-      console.log('New Chat o')
+      console.log("New Chat o");
       this.$store.dispatch("ADD_CHAT", chat);
     }
   },
