@@ -23,7 +23,9 @@
           order-md="1"
           order-sm="2"
         >
-          <router-view></router-view>
+          <transition>
+            <router-view></router-view>
+          </transition>
           <alert-component
             :message="alert_message"
             :show="dismissCountdown"
@@ -156,6 +158,15 @@ export default {
   position: fixed !important;
   right: 0px !important;
 }
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 1s, transform 1s;
+}
+.page-enter,
+.page-leave-to {
+  opacity: 0;
+  transform: translateX(-30%);
+}
 /* 
 #main-view {
   height: 80vh;
@@ -167,5 +178,27 @@ export default {
   /* border-radius: 8px; */
   height: auto;
   /* background-color: #d1ecf1; */
+}
+
+.zoom-enter-active,
+.zoom-leave-active {
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
+  animation-name: zoom;
+}
+
+.zoom-leave-active {
+  animation-direction: reverse;
+}
+
+@keyframes zoom {
+  from {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 </style>
