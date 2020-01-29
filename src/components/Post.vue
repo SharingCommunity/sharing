@@ -9,7 +9,7 @@
       <span class="badge">{{ post.giving | postType }}</span>
     </div> -->
     <div class="p-2">
-      <p class="card-text my-1 align-self-center">
+      <p class="post-text my-1 align-self-center">
         {{ post.message }}
       </p>
     </div>
@@ -67,6 +67,10 @@ export default {
   border: 3px solid #bee5eb;
   cursor: pointer;
   transition: border 0.2s ease-out;
+}
+.post-text {
+  font-size: 16px;
+  font-weight: 500;
 }
 .no-click {
   user-select: none;
