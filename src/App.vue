@@ -30,15 +30,15 @@ export default {
       }
       this.registration.waiting.postMessage("skipWaiting");
     }
-  },
-  created() {
-    document.addEventListener("swUpdated", this.showRefreshUI, { once: true });
-    navigator.serviceWorker.addEventListener("controllerchange", () => {
-      if (this.refreshing) return;
-      this.refreshing = true;
-      window.location.reload();
-    });
   }
+  // created() {
+  //   document.addEventListener("swUpdated", this.showRefreshUI, { once: true });
+  //   navigator.serviceWorker.addEventListener("controllerchange", () => {
+  //     if (this.refreshing) return;
+  //     this.refreshing = true;
+  //     window.location.reload();
+  //   });
+  // }
 };
 </script>
 

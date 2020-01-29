@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { register } from "register-service-worker";
+import { register } from "./register-service-worker";
 
 if (process.env.NODE_ENV === "production") {
   register(`${process.env.BASE_URL}service-worker.js`, {
@@ -19,12 +19,12 @@ if (process.env.NODE_ENV === "production") {
       console.log("New content is downloading.");
     },
     updated(registration) {
-      document.dispatchEvent(
-        new CustomEvent("swUpdated", { detail: registration })
-      );
       console.log("New content is available; please refresh.");
-      let worker = registration.waiting;
-      worker.postMessage({ action: "skipWaiting" });
+      let confirmationResult = confirm(
+        "New content found! Do you want to reload the app?"
+      );
+      if (confirmationResult)
+        registration.waiting.postMessage({ action: "skipWaiting" });
     },
     offline() {
       console.log(
@@ -36,3 +36,10 @@ if (process.env.NODE_ENV === "production") {
     }
   });
 }
+
+var refreshing;
+navigator.serviceWorker.addEventListener("controllerchange", () => {
+  if (refreshing) return;
+  refreshing = true;
+  window.location.reload();
+});

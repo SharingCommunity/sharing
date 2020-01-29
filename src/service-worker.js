@@ -6,12 +6,12 @@ importScripts(
 if (workbox) {
   console.log(`Yay! Workbox is loaded 🎉`);
 
+  workbox.core.setCacheNameDetails({ prefix: "lump" });
+
   // apply precaching. In the built version, the precacheManifest will
   // be imported using importScripts (as is workbox itself) and we can
   // precache this. This is all we need for precaching
   workbox.precaching.precacheAndRoute(self.__precacheManifest || []);
-
-  workbox.routing.registerRoute(/\.js$/, new workbox.strategies.NetworkFirst());
 
   workbox.routing.registerNavigationRoute(
     // Assuming '/single-page-app.html' has been precached,
@@ -56,3 +56,10 @@ if (workbox) {
 } else {
   console.log(`Boo! Workbox didn't load 😬`);
 }
+
+// install new service worker when ok, then reload page.
+self.addEventListener("message", msg => {
+  if (msg.data.action == "skipWaiting") {
+    self.skipWaiting();
+  }
+});
