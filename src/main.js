@@ -7,6 +7,7 @@ import BootstrapVue from "bootstrap-vue";
 import moment from "vue-moment";
 import VueSocketIo from "vue-socket.io";
 import EvaIcons from "vue-eva-icons";
+import "./registerServiceWorker";
 // import socketio from "socket.io-client";
 
 // import "bootstrap/dist/css/bootstrap.css";
@@ -36,8 +37,6 @@ new Vue({
   store,
   render: h => h(App),
   created: function() {
-    console.log("Vue App created!", navigator.platform);
-    // console.log("This => ", this);
     let userID;
     let sessionID;
 
