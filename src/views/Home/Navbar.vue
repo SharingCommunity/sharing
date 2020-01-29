@@ -57,7 +57,7 @@ export default {
 </script>
 <style>
 .navbar {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
+  font-family: "Poppins", sans-serif;
 }
 .notifs {
   cursor: pointer;
