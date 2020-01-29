@@ -1,13 +1,14 @@
 <template>
   <div
     class="chat-bubble"
-    :class="this.chat.from === this.$store.getters.USER ? 'sender' : 'reciever'"
+    :class="this.chat.from === this.$store.getters.USER ? 'mine' : 'theirs'"
   >
     <div class="chat-message">
       {{ chat.message }}
     </div>
+
     <div class="text-muted">
-      <span>{{ chat.createdAt | moment("hh:mm") }}</span>
+      <span>{{ chat.createdAt | moment("hh:mm a") }}</span>
     </div>
   </div>
 </template>
@@ -40,7 +41,7 @@ export default {
   flex-direction: column;
 } */
 
-.message {
+.chat-bubble {
   border-radius: 20px;
   padding: 8px 15px;
   margin-top: 5px;
@@ -107,7 +108,7 @@ export default {
 }
 
 .chat-bubble .chat-detail {
-  font-size: 12px;
+  font-size: 10px;
   text-align: right !important;
   font-weight: 100;
   color: rgba(0, 0, 0, 0.7);
