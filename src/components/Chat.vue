@@ -6,7 +6,6 @@
     <div class="chat-message">
       {{ chat.message }}
     </div>
-
     <div class="text-muted">
       <span>{{ chat.createdAt | moment("hh:mm a") }}</span>
     </div>
@@ -70,7 +69,6 @@ export default {
   background-attachment: fixed;
   position: relative;
 }
-
 .chat-bubble.theirs {
   background-color: darksalmon;
   margin-right: auto;
