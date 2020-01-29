@@ -4,8 +4,10 @@
     fixed="top"
   >
     <b-navbar-brand class="text-white">
-      Sharing
-      <b-badge variant="secondary" class="text-size: small" pill>alpha</b-badge>
+      WeGive
+      <b-badge variant="secondary" class="text-size: small" pill
+        >alpha v0.2.0</b-badge
+      >
     </b-navbar-brand>
     <div>
       <div class="notifs nav-icon">
