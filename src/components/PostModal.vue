@@ -25,7 +25,7 @@
                 id="ask"
               >
                 <p>
-                  <em>ask</em>
+                  Ask
                 </p>
                 <span>👐</span>
               </div>
@@ -36,7 +36,7 @@
                 id="give"
               >
                 <p>
-                  <em>give</em>
+                  Give
                 </p>
                 <span>🎁</span>
               </div>
@@ -48,80 +48,81 @@
             title-item-class="disabledTab"
             class="text-left"
           >
-            <b-row class="py-2">
-              <b-col>
-                <b-button @click="goNext($event.target.innerText)"
-                  >Food 🥪</b-button
-                >
-              </b-col>
-              <b-col>
-                <b-button @click="goNext($event.target.innerText)"
-                  >Assignment 📚</b-button
-                >
-              </b-col>
-              <b-col>
-                <b-button @click="goNext($event.target.innerText)"
-                  >Care 💕</b-button
-                >
-              </b-col>
-            </b-row>
-            <b-row class="py-2">
-              <b-col>
-                <b-button @click="goNext($event.target.innerText)"
-                  >Prayer 🙏</b-button
-                >
-              </b-col>
-              <b-col>
-                <b-button @click="goNext($event.target.innerText)"
-                  >Money 💲</b-button
-                >
-              </b-col>
-            </b-row>
+            <table class="table category-table">
+              <tr>
+                <td class="p-2">
+                  <b-button block @click="goNext($event.target.id)" id="type-1"
+                    >Food <br />
+                    🥪</b-button
+                  >
+                </td>
+                <td class="p-2">
+                  <b-button
+                    block
+                    @click="goNext($event.target.id)"
+                    class="small-text"
+                    id="type-2"
+                    >Assignment <br />📚</b-button
+                  >
+                </td>
+                <td class="p-2">
+                  <b-button block @click="goNext($event.target.id)" id="type-3"
+                    >Care <br />💕</b-button
+                  >
+                </td>
+              </tr>
+
+              <tr>
+                <td class="p-2">
+                  <b-button block @click="goNext($event.target.id)" id="type-4"
+                    >Prayer <br />🙏</b-button
+                  >
+                </td>
+
+                <td>
+                  <b-button block @click="goNext($event.target.id)" id="type-5"
+                    >Item <br />🏷️</b-button
+                  >
+                </td>
+
+                <td>
+                  <b-button block @click="goNext($event.target.id)" id="type-6"
+                    >Others <br />✳️</b-button
+                  >
+                </td>
+              </tr>
+            </table>
           </b-tab>
           <b-tab title="Add Details" id="4" title-item-class="disabledTab">
             <b-alert variant="warning" show dismissible>
-              <p>Please add some more details like:</p>
-              <ul>
-                <li>What kind of food do you want?</li>
-                <li>Where can they get it? e.g Room 106 EE</li>
-                <li>How much money?</li>
-              </ul>
-              <p>Anything to make it easier for everyone :)</p>
+              <p>Try to be specific :)</p>
             </b-alert>
 
-            <div class="form-group">
+            <div class="form-group mt-3 text-left">
+              <label>Short Name</label>
+              <input
+                class="sharing-border form-control"
+                autofocus
+                required
+                placeholder="e.g Hausa Dictionary"
+                v-model="post.short_name"
+              />
+            </div>
+
+            <div class="form-group text-left">
               <label>Details</label>
               <textarea
                 class="sharing-border form-control"
+                placeholder="e.g Room 206 FF, 5pm"
                 autofocus
+                required
                 v-model="post.details"
                 v-on:keyup.prevent.enter="tabIndex++"
               ></textarea>
             </div>
-            <!-- <b-button
-            class="p-2"
-              variant="info"
-              @click="
-                () => {
-                  tabIndex++;
-                }
-              "
-              >Next</b-button
-            > -->
-
-            <!-- <p>
-              <b-card class="w-100 postinput">{{
-                this.post.message
-              }}</b-card>
-            </p> -->
           </b-tab>
           <b-tab title="Send Post" id="5" title-item-class="disabledTab">
             <p>Review your post, when you're ready hit send!</p>
-            <!-- <p>
-              <b-card class="w-100 postinput">{{
-                this.post.message
-              }}</b-card>
-            </p> -->
           </b-tab>
         </b-tabs>
       </div>
@@ -169,29 +170,34 @@ export default {
           this.post.giving = true;
           this.tabIndex++;
           break;
-        case "Food 🥪":
+        case "type-1":
           this.post.message = this.post.message.concat(" some Food 🥪");
           this.post.subject = "food";
           this.tabIndex++;
           break;
-        case "Assignment 📚":
+        case "type-2":
           this.post.message = this.post.message.concat(" Assignment 📚");
           this.post.subject = "assignment";
           this.tabIndex++;
           break;
-        case "Care 💕":
+        case "type-3":
           this.post.message = this.post.message.concat(" Care 💕");
           this.post.subject = "care";
           this.tabIndex++;
           break;
-        case "Prayer 🙏":
+        case "type-4":
           this.post.message = this.post.message.concat(" some Prayer 🙏");
           this.post.subject = "prayer";
           this.tabIndex++;
           break;
-        case "Money 💲":
-          this.post.message = this.post.message.concat(" some Money 💲");
-          this.post.subject = "money";
+        case "type-5":
+          this.post.message = this.post.message.concat(" an item 🏷️");
+          this.post.subject = "item";
+          this.tabIndex++;
+          break;
+        case "type-6":
+          this.post.message = this.post.message.concat(" something ✳️");
+          this.post.subject = "other";
           this.tabIndex++;
           break;
       }
@@ -205,7 +211,8 @@ export default {
         participants: [],
         subject: this.post.subject,
         user: this.$store.getters.USER,
-        details: this.post.details
+        details: this.post.details,
+        short_name: this.post.short_name
       };
       this.$socket.emit("post", post);
       this.closeModal();
@@ -233,7 +240,8 @@ export default {
         giving: false,
         asking: false,
         subject: "",
-        details: ""
+        details: "",
+        short_name: ""
       }
     };
   },
@@ -300,10 +308,14 @@ export default {
 #post-type div span {
   font-size: 40px;
 }
-#type .row button {
+#type .category-table button {
   border: none !important;
   background-color: #ffb2b2;
   transition: border 0.1s ease-out;
+}
+
+.category-table {
+  table-layout: fixed !important;
 }
 #type .row button:hover {
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);

@@ -1,7 +1,7 @@
 <template>
   <div class="text-center p-1 pt-3 mb-2" id="header">
     <!-- <h5 class="mb-0 text-bold">Sharing App</h5> -->
-    <p class="lead">
+    <p class="lead small">
       Look around and start sharing 💕
     </p>
     <b-alert variant="success" show dismissible>
@@ -76,5 +76,9 @@ export default {
 }
 .p15 {
   padding: 0px 15px !important;
+}
+
+.small {
+  font-size: 16px;
 }
 </style>

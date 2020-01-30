@@ -11,9 +11,13 @@ export default new Vuex.Store({
   state: {
     posts: [],
     events: [],
-    user: ""
+    user: "",
+    loading_posts: false
   },
   getters: {
+    loading_posts: state => {
+      return state.loading_posts;
+    },
     POSTS: state => {
       return state.posts;
     },
@@ -67,9 +71,13 @@ export default new Vuex.Store({
       context.commit("SET_USERNAME", username);
     },
     SET_POSTS: async context => {
+      context.state.loading_posts = true;
       const { data } = await Axios.get(`${API}/api/posts`, {
         withCredentials: true
       });
+
+      context.state.loading_posts = false;
+
       context.commit("SET_POSTS", data.results);
     },
     FETCH_EVENTS: async context => {
