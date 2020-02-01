@@ -8,6 +8,8 @@ if (workbox) {
 
   workbox.core.setCacheNameDetails({ prefix: "lump" });
 
+  workbox.precaching.precacheAndRoute(self.__precacheManifest || []);
+
   workbox.routing.registerNavigationRoute(
     // Assuming '/single-page-app.html' has been precached,
     // look up its corresponding cache key.
@@ -31,10 +33,14 @@ if (workbox) {
     })
   );
 
+  workbox.routing.registerRoute(
+    new RegExp(/^(http|https):.*wegive\.me(?:\\?.+)?$/),
+    workbox.precaching.getCacheKeyForURL("/index.html")
+  );
+
   // apply precaching. In the built version, the precacheManifest will
   // be imported using importScripts (as is workbox itself) and we can
   // precache this. This is all we need for precaching
-  workbox.precaching.precacheAndRoute(self.__precacheManifest || []);
 
   // workbox.routing.registerRoute(
   //   // Cache image files.
