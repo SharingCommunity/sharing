@@ -30,27 +30,32 @@
       <!-- <hr class="mt-4 bg-dark" /> -->
 
       <div class="text-left mb-5">
-        <h4 class="mt-2">Description</h4>
+        <h4 class="my-2 font-weight-bold font-size-16">Name</h4>
+        <p>{{ post.short_name || "No name :(" }}</p>
+
+        <h4 class="m-0 font-weight-bold font-size-16">Description</h4>
         <p>{{ post.details || "No description :(" }}</p>
 
         <hr />
         <div v-if="isParticipant && post.status === 'ongoing'" class="chats">
-          <h3>Chat</h3>
-          <p class="text-muted">Start typing to chat</p>
+          <h3 class="font-size-20 font-weight-bold text-center text-black-50">
+            Chat
+          </h3>
+          <p class="text-muted text-center">Start typing to chat</p>
           <transition-group name="bounce" tag="div">
             <chat v-for="chat in post.chats" :chat="chat" :key="chat._id">
             </chat>
           </transition-group>
 
-          <div class="shadow-sm">
+          <div class="shadow-sm fixed-bottom mb-2 px-2">
             <b-input-group size="lg" class="mt-3">
-              <b-form-input v-model="message" autofocus></b-form-input>
+              <b-form-input
+                @keydown.enter="sendChat"
+                v-model="message"
+                autofocus
+              ></b-form-input>
               <b-input-group-append>
-                <b-button
-                  variant="success"
-                  @click="sendChat"
-                  @keydown.enter="sendChat"
-                >
+                <b-button variant="success" @click="sendChat">
                   <eva-icon
                     name="paper-plane-outline"
                     fill="white"
@@ -64,7 +69,7 @@
         </div>
 
         <!-- If its the same user -->
-        <b-card v-else-if="sameUser">
+        <b-card v-else>
           <b-card-body v-if="sameUser && post.status === 'pending'">
             Sorry you can't chat until someone responds to your post
           </b-card-body>
@@ -171,6 +176,7 @@ export default {
   max-height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
+  background-color: #ffffff !important;
 }
 
 .modal-dialog {
@@ -196,10 +202,21 @@ export default {
 }
 
 .chats {
-  border: solid 1px #eee;
   display: flex;
   flex-direction: column;
   padding: 10px;
-  background-color: #eee;
+  background-color: #ffffff;
+}
+
+.font-size-16 {
+  font-size: 16px !important;
+}
+
+.font-size-18 {
+  font-size: 18px !important;
+}
+
+.font-size-20 {
+  font-size: 20px !important;
 }
 </style>

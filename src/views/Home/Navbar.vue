@@ -5,8 +5,8 @@
   >
     <b-navbar-brand class="text-white">
       WeGive
-      <b-badge variant="secondary" class="text-size: small" pill
-        >alpha v0.2.0</b-badge
+      <b-badge variant="secondary" style="text-size: x-small;" pill
+        >alpha v0.3.2</b-badge
       >
     </b-navbar-brand>
     <div>

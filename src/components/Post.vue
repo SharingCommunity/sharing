@@ -79,9 +79,9 @@ export default {
   widows: 50px;
   height: 50px;
 }
-.post p {
-  font-size: 20px;
-  font-weight: bold;
+.post .card-text {
+  font-size: 18px;
+  /* font-weight: bold; */
 }
 .post .post-details {
   /* background-color: #bee5eb; */

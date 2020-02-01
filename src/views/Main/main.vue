@@ -1,6 +1,16 @@
 <template>
   <div>
-    <div v-if="$store.getters.POSTS.length == 0">
+    <!-- spinner loader -->
+    <b-spinner
+      variant="dark"
+      style="width: 3rem; height: 3rem;"
+      v-show="$store.getters.loading_posts"
+    ></b-spinner>
+    <!-- spinner loader -->
+
+    <div
+      v-if="$store.getters.POSTS.length == 0 && !$store.getters.loading_posts"
+    >
       <p>🔦</p>
       <p>No posts yet</p>
       <p>Click the plus button to add a new one</p>

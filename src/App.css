@@ -45,3 +45,11 @@ body {
   /* background-color: white; */
   background-color: #20c997;
 }
+
+.small-text {
+  font-size: small;
+}
+
+.smaller-text {
+  font-size: smaller;
+}

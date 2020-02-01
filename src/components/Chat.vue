@@ -6,7 +6,7 @@
     <div class="chat-message">
       {{ chat.message }}
     </div>
-    <div class="text-muted">
+    <div class="text-muted chat-detail">
       <span>{{ chat.createdAt | moment("hh:mm a") }}</span>
     </div>
   </div>
@@ -25,8 +25,8 @@ export default {
   margin-top: 5px;
   margin-bottom: 5px;
   border-radius: 15px;
-  border-radius: 20px;
-  padding: 8px 15px;
+  color: #ffffff !important;
+  padding: 6px 12px;
   display: inline-block;
   text-align: left;
   position: relative;
@@ -40,39 +40,18 @@ export default {
   flex-direction: column;
 } */
 
-.chat-bubble {
-  border-radius: 20px;
-  padding: 8px 15px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  display: inline-block;
-}
-
 .yours {
   align-items: flex-start;
-}
-
-.yours .message {
-  margin-right: 25%;
-  background-color: #eee;
-  position: relative;
 }
 
 .mine {
   align-items: flex-end;
 }
 
-.mine .message {
-  color: white;
-  margin-left: 25%;
-  background: linear-gradient(to bottom, #00d0ea 0%, #0085d1 100%);
-  background-attachment: fixed;
-  position: relative;
-}
 .chat-bubble.theirs {
-  background-color: darksalmon;
+  background-color: #8bc34a;
   margin-right: auto;
-  margin-left: 14px;
+  margin-left: 1px;
 }
 
 .mine::after {
@@ -83,7 +62,7 @@ export default {
   right: -10px;
   width: 10px;
   height: 20px;
-  background: cornflowerblue;
+  background: #ffffff;
   border-bottom-left-radius: 10px;
 }
 
@@ -96,7 +75,7 @@ export default {
   height: 20px;
   width: 20px;
   /* background: linear-gradient(to bottom, #00d0ea 0%, #0085d1 100%); */
-  background: cornflowerblue;
+  background: #2196f3;
   background-attachment: fixed;
   border-bottom-left-radius: 15px;
 }
@@ -105,17 +84,17 @@ export default {
   position: relative;
 }
 
-.chat-bubble .chat-detail {
-  font-size: 10px;
+.chat-detail {
+  font-size: 11px;
   text-align: right !important;
   font-weight: 100;
-  color: rgba(0, 0, 0, 0.7);
+  /* color: rgba(255, 255, 255, 0.6) !important; */
 }
 
 .chat-bubble.mine {
-  background-color: cornflowerblue;
+  background-color: #2196f3;
   margin-left: auto;
-  margin-right: 14px;
+  margin-right: 1px;
 }
 
 .theirs::before {
@@ -126,7 +105,7 @@ export default {
   left: -7px;
   height: 20px;
   width: 20px;
-  background: salmon;
+  background: #8bc34a;
   border-bottom-right-radius: 15px;
 }
 
@@ -138,7 +117,7 @@ export default {
   left: -10px;
   width: 10px;
   height: 20px;
-  background: white;
+  background: #ffffff;
   border-bottom-right-radius: 10px;
 }
 </style>
