@@ -87,6 +87,10 @@ export default {
       this.makeToast(false, event.message, "New Message!");
       this.$store.dispatch("NEW_EVENT", event);
     },
+    post_completed: function(event) {
+      // TODO: Add to Events array...
+      this.makeToast(false, event.message, "Post Completed");
+    },
     new_chat: function(chat) {
       this.$store.dispatch("ADD_CHAT", chat);
     }
@@ -107,7 +111,7 @@ export default {
     setSession() {
       if (window.localStorage.getItem("Sharing")) {
         this.$store.dispatch(
-          "SET_USER",
+          "SET_USER_ID",
           JSON.parse(window.localStorage.getItem("Sharing")).userID
         );
       }
@@ -117,28 +121,11 @@ export default {
     console.log("Home Component Created =>", this);
   },
   mounted() {
-    // window.onscroll = function(ev) {
-    //   const windowScroll = ev.view.document.scrollingElement.scrollTop;
-    //   if (
-    //     document.getElementById("sidebar-container").scrollTop <= windowScroll
-    //   ) {
-    //     document
-    //       .getElementById("sidebar-container")
-    //       .toggleAttribute("class", "fixed-sidebar");
-    //   } else {
-    //     document
-    //       .getElementById("sidebar-container")
-    //       .toggleAttribute("class", "fixed-sidebar");
-    //   }
-    // };
-
     this.setSession();
 
-    // this.setUsername();
+    this.$store.dispatch("FETCH_USER");
 
-    // this.$store.dispatch("GET_USER");
     this.$store.dispatch("SET_POSTS");
-    // this.getUserData();
   },
   destroyed() {
     console.log("Home Component Destroyed =>", this);

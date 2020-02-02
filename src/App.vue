@@ -29,12 +29,19 @@ export default {
     }
   }
   // created() {
-  //   document.addEventListener("swUpdated", this.showRefreshUI, { once: true });
-  //   navigator.serviceWorker.addEventListener("controllerchange", () => {
-  //     if (this.refreshing) return;
-  //     this.refreshing = true;
-  //     window.location.reload();
-  //   });
+  //   // document.addEventListener("swUpdated", this.showRefreshUI, { once: true });
+  //   // navigator.serviceWorker.addEventListener("controllerchange", () => {
+  //   //   if (this.refreshing) return;
+  //   //   this.refreshing = true;
+  //   //   window.location.reload();
+  //   // });
+
+  //   // if ("Notification" in window && navigator.serviceWorker) {
+  //   //   // Display the UI to let the user toggle notifications
+  //   //   Notification.requestPermission(function(status) {
+  //   //     console.log("Notification permission status:", status);
+  //   //   });
+  //   // }
   // }
 };
 </script>

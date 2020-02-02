@@ -34,6 +34,27 @@
         }}
         hours
       </small>
+
+      <b-dropdown
+        v-if="showOptions"
+        size="sm"
+        variant="link"
+        right
+        :toggle-class="classes"
+        no-caret
+      >
+        <template v-slot:button-content>
+          <eva-icon
+            name="more-vertical-outline"
+            fill="#00000050"
+            width="25px"
+            height="25px"
+          ></eva-icon>
+        </template>
+        <b-dropdown-item class="button" @click="deletePost"
+          >Delete</b-dropdown-item
+        >
+      </b-dropdown>
     </div>
   </div>
 </template>
@@ -41,7 +62,24 @@
 <script>
 export default {
   name: "PostComponent",
-  props: ["post", "id"],
+  props: {
+    post: {
+      type: Object,
+      required: true
+    },
+    id: {
+      type: [String, Number]
+    },
+    showOptions: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data() {
+    return {
+      classes: ["text-decoration-none", "p-0", "pl-2"]
+    };
+  },
   filters: {
     postType(type) {
       return type ? "Giving" : "Asking";
@@ -50,6 +88,11 @@ export default {
   computed: {
     postStyle: function() {
       return this.post.giving ? "red-style" : "blue-style";
+    }
+  },
+  methods: {
+    deletePost() {
+      this.$emit("delete-post");
     }
   }
 };

@@ -20,13 +20,17 @@
               height="25px"
             ></eva-icon>
           </template>
-          <b-dropdown-item href="#">Your Posts</b-dropdown-item>
-          <b-dropdown-item href="#">WTF is this</b-dropdown-item>
+          <b-dropdown-item class="button" @click="goTo('/posts')"
+            >Your Posts</b-dropdown-item
+          >
+          <b-dropdown-item @click="goTo('/help/about')"
+            >WTF is this</b-dropdown-item
+          >
         </b-dropdown>
       </div>
-      <div class="notifs nav-icon opacity" @click="goToEvents">
-        <b-badge v-if="$store.getters.EVENTS.length > 0" variant="light">{{
-          $store.getters.EVENTS.length
+      <div class="notifs nav-icon opacity" @click="goTo('/events')">
+        <b-badge v-if="events.length > 0" variant="light">{{
+          events.length
         }}</b-badge>
         <eva-icon
           v-b-tooltip.hover
@@ -48,9 +52,17 @@ export default {
       classes: ["text-decoration-none", "p-0", "pl-2", "opacity"]
     };
   },
+  computed: {
+    events() {
+      return this.$store.getters.NEW_EVENTS;
+    }
+  },
   methods: {
-    goToEvents() {
-      this.$router.push("/events");
+    goTo(where) {
+      this.$router.push(where);
+    },
+    notif() {
+      this.$notif();
     }
   }
 };

@@ -9,6 +9,8 @@ import Login from "./views/Auth/login.vue";
 import Signup from "./views/Auth/signup.vue";
 import ViewPost from "./views/ViewPost.vue";
 import ViewEvents from "./views/ViewEvents.vue";
+import UserPosts from "./views/UserPosts.vue";
+import About from "./views/help/about.vue";
 
 Vue.use(Router);
 
@@ -70,6 +72,19 @@ export const router = new Router({
       path: "/events",
       component: ViewEvents,
       name: "ViewEvents"
+    },
+    {
+      path: "/posts",
+      component: UserPosts,
+      name: "UserPosts"
+    },
+    {
+      path: "/help/about",
+      component: About,
+      name: "About",
+      meta: {
+        guest: true
+      }
     }
   ]
 });
