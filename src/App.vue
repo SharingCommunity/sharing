@@ -3,9 +3,6 @@
     <transition>
       <router-view />
     </transition>
-    <button v-if="updateExists" @click="refreshApp">
-      New version available! Click to update
-    </button>
   </div>
 </template>
 
