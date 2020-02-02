@@ -18,7 +18,6 @@ module.exports = {
     display: "standalone",
     theme_color: "#20c997",
     background_color: "#fff",
-    gcm_sender_id: "568651074322",
     // configure the workbox plugin
     workboxPluginMode: "InjectManifest",
     workboxOptions: {
