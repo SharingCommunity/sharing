@@ -6,12 +6,6 @@ importScripts(
 if (workbox) {
   console.log(`Yay! Workbox is loaded 🎉`);
 
-  workbox.precaching.precacheAndRoute(self.__precacheManifest || []);
-
-  workbox.routing.registerNavigationRoute(
-    workbox.precaching.getCacheKeyForURL("/index.html")
-  );
-
   // Cache Google fonts:
   workbox.routing.registerRoute(
     new RegExp("https://fonts.(?:googleapis|gstatic).com/(.*)"),
@@ -63,6 +57,12 @@ if (workbox) {
         })
       ]
     })
+  );
+
+  workbox.precaching.precacheAndRoute(self.__precacheManifest || []);
+
+  workbox.routing.registerNavigationRoute(
+    workbox.precaching.getCacheKeyForURL("/index.html")
   );
 
   // workbox.routing.registerRoute(
