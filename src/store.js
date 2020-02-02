@@ -11,7 +11,10 @@ export default new Vuex.Store({
   state: {
     posts: [],
     events: [],
-    user: "",
+    user_posts: [],
+    current_post: {},
+    userID: "",
+    user: {},
     loading_posts: false
   },
   getters: {
@@ -21,14 +24,32 @@ export default new Vuex.Store({
     POSTS: state => {
       return state.posts;
     },
+    USER_POSTS: state => {
+      return state.user_posts;
+    },
     EVENTS: state => {
-      return state.events;
+      return state.user.Events || [];
+    },
+    NEW_EVENTS: state => {
+      if (!state.user.Events) {
+        return [];
+      }
+      return state.user.Events.filter(event => event.seen) || [];
     },
     USER: state => {
-      return state.user;
+      return state.user || JSON.parse(window.localStorage.getItem("wg_user"));
+    },
+    USER_ID: state => {
+      return (
+        state.userID ||
+        JSON.parse(window.localStorage.getItem("Sharing")).userID
+      );
     },
     POST: state => id => {
       return state.posts.find(p => p._id === id);
+    },
+    USER_POST: state => id => {
+      return state.user.Posts.find(p => p._id === id);
     },
     POST_ID: state => id => {
       return state.posts.findIndex(p => p._id === id);
@@ -38,9 +59,8 @@ export default new Vuex.Store({
     SET_USER: (state, user) => {
       state.user = user;
     },
-    SET_USERNAME: (state, data) => {
-      state.user.username = data.username;
-      state.user._id = data._id;
+    SET_USER_ID: (state, userID) => {
+      state.userID = userID;
     },
     ADD_POST: (state, post) => {
       state.posts.unshift(post);
@@ -49,8 +69,12 @@ export default new Vuex.Store({
     SET_POSTS: (state, payload) => {
       state.posts = payload;
     },
+    SET_USER_POSTS: (state, payload) => {
+      state.user_posts = payload;
+    },
     NEW_EVENT: (state, event) => {
       state.events.unshift(event);
+      state.user.Events.unshift(event);
     },
     UPDATE_POST: (state, payload) => {
       Vue.set(state.posts, payload.index, payload.post);
@@ -67,12 +91,12 @@ export default new Vuex.Store({
     SET_USER: (context, user) => {
       context.commit("SET_USER", user);
     },
-    SET_USERNAME: (context, username) => {
-      context.commit("SET_USERNAME", username);
+    SET_USER_ID: (context, userID) => {
+      context.commit("SET_USER_ID", userID);
     },
     SET_POSTS: async context => {
       context.state.loading_posts = true;
-      const { data } = await Axios.get(`${API}/api/posts`, {
+      const { data } = await Axios.get(`${API}/api/posts?pending=true`, {
         withCredentials: true
       });
 
@@ -80,10 +104,30 @@ export default new Vuex.Store({
 
       context.commit("SET_POSTS", data.results);
     },
+    FETCH_POST: async (context, id) => {
+      const { data } = await Axios.get(`${API}/api/posts/${id}`, {
+        withCredentials: true
+      });
+
+      return data;
+    },
+    FETCH_USER_POSTS: async context => {
+      let id = context.state.userID;
+      if (!context.state.userID) {
+        id = JSON.parse(window.localStorage.getItem("Sharing")).userID;
+      }
+      context.state.loading_posts = true;
+      const { data } = await Axios.get(`${API}/api/posts/user/${id}`, {
+        withCredentials: true
+      });
+
+      context.state.loading_posts = false;
+
+      context.commit("SET_USER_POSTS", data.results);
+    },
     FETCH_EVENTS: async context => {
-      let userID = context.state.user;
-      console.log("userID =>", context.state.user);
-      if (!context.state.user) {
+      let userID = context.state.userID;
+      if (!context.state.userID) {
         userID = JSON.parse(window.localStorage.getItem("Sharing")).userID;
       }
 
@@ -94,15 +138,14 @@ export default new Vuex.Store({
       console.log("User Events", data.results);
       context.commit("SET_EVENTS", data.results);
     },
-    GET_USER: async context => {
-      const { data } = await Axios.get(
-        `${API}/api/user/${context.state.user}`,
-        {
-          withCredentials: true
-        }
-      );
-      console.log("data =>", data.results);
-      context.commit("SET_USER", data.results);
+    FETCH_USER: async context => {
+      const userId =
+        window.localStorage.getItem("Sharing").userID || context.state.userID;
+      const { data } = await Axios.get(`${API}/api/user/${userId}`, {
+        withCredentials: true
+      });
+      context.commit("SET_USER", data.result);
+      window.localStorage.setItem("wg_user", JSON.stringify(data.result));
     },
     ADD_POST: (context, post) => {
       context.commit("ADD_POST", post);

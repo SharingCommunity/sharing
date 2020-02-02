@@ -18,7 +18,7 @@
     <div class="container-fluid">
       <h5>Showing your latest events</h5>
       <hr class="mb-4" />
-      <div v-for="ev in $store.getters.EVENTS" :key="ev._id">
+      <div v-for="ev in events" :key="ev._id">
         <event-component
           @view-event="handleEvent(ev)"
           :event="ev"
@@ -34,18 +34,20 @@ export default {
   components: {
     EventComponent
   },
+  computed: {
+    events() {
+      return this.$store.getters.NEW_EVENTS;
+    }
+  },
   methods: {
     back() {
       this.$router.back();
     },
     handleEvent(event) {
-      if (event.type == 2 || event.type == 1) {
+      if (event.type == "message" || event.type == "active_post") {
         this.$router.push({ name: "Post", params: { id: event.post } });
       }
     }
-  },
-  mounted() {
-    this.$store.dispatch("FETCH_EVENTS");
   }
 };
 </script>
