@@ -74,21 +74,14 @@ export default {
     },
     openPost(post) {
       if (
-        post.status === "ongoing" &&
         post.participants.some(u => {
           return u === this.$store.getters.USER;
         })
       ) {
         // this.$router.push({ name: "Post", params: { id } });
         this.$router.push({ name: "Post", params: { id: post._id } });
-      } else if (post.status === "pending") {
-        this.$router.push({ name: "Post", params: { id: post._id } });
       } else {
-        this.$bvToast.toast("This post is already in progress", {
-          title: "Woops! Can't view post",
-          solid: true,
-          variant: "info"
-        });
+        this.$router.push({ name: "Post", params: { id: post._id } });
       }
     }
   },
