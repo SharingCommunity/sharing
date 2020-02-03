@@ -4,9 +4,6 @@
     <p class="lead small">
       Look around and start sharing 💕
     </p>
-    <p v-if="$store.getters.USER_POSTS.length > 0">
-      You can see your posts in the Posts page, click that menu...
-    </p>
 
     <b-alert variant="success" show dismissible>
       Showing Latest posts from the last 12 hours
