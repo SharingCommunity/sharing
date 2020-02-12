@@ -87,11 +87,16 @@
               <b-button
                 @click="startSharing"
                 class="mb-3"
+                :disabled="loading"
                 variant="success"
                 block
                 >Yes</b-button
               >
-              <b-button variant="secondary" @click="goBackHome" block
+              <b-button
+                variant="secondary"
+                :disabled="loading"
+                @click="goBackHome"
+                block
                 >Nah</b-button
               >
             </b-card-body>
@@ -116,12 +121,13 @@ export default {
   data() {
     return {
       message: "",
-      id: this.$route.params.id
+      id: this.$route.params.id,
+      loading: false
     };
   },
   computed: {
     post() {
-      return this.$store.getters.POST(this.id);
+      return this.$store.getters.CURRENT_POST;
     },
     sameUser() {
       return this.post.user === this.$store.getters.USER_ID;
@@ -194,9 +200,9 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch("SET_POSTS");
+    this.$store.dispatch("FETCH_POST", { id: this.id, withChats: true });
 
-    if (window.localStorage.getItem("wg_user") !== "undefined") {
+    if (JSON.parse(window.localStorage.getItem("wg_user")) !== "undefined") {
       this.$store.dispatch(
         "SET_USER",
         JSON.parse(window.localStorage.getItem("wg_user"))

@@ -211,9 +211,10 @@ export default {
         participants: [],
         subject: this.post.subject,
         user: this.$store.getters.USER,
-        details: this.post.details,
-        short_name: this.post.short_name
+        details: this.post.details.trim(),
+        short_name: this.post.short_name.trim()
       };
+
       this.$socket.emit("post", post);
       this.closeModal();
     },
@@ -253,6 +254,7 @@ export default {
         this.post.asking = false;
         this.post.subject = "";
         this.post.details = "";
+        this.post.short_name = "";
       }
       // console.log("changed!");
     }
