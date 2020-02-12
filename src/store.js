@@ -45,6 +45,9 @@ export default new Vuex.Store({
         JSON.parse(window.localStorage.getItem("Sharing")).userID
       );
     },
+    CURRENT_POST: state => {
+      return state.current_post;
+    },
     POST: state => id => {
       return state.posts.find(p => p._id === id);
     },
@@ -69,6 +72,9 @@ export default new Vuex.Store({
     SET_POSTS: (state, payload) => {
       state.posts = payload;
     },
+    SET_POST: (state, post) => {
+      state.current_post = post;
+    },
     SET_USER_POSTS: (state, payload) => {
       state.user_posts = payload;
     },
@@ -76,12 +82,13 @@ export default new Vuex.Store({
       state.events.unshift(event);
       state.user.Events.unshift(event);
     },
-    UPDATE_POST: (state, payload) => {
-      Vue.set(state.posts, payload.index, payload.post);
-      // state.posts[payload.index] = payload.post;
+    UPDATE_POST: (state, post) => {
+      state.current_post = post;
     },
-    ADD_CHAT: (state, payload) => {
-      state.posts[payload.index].chats.push(payload.chat);
+    ADD_CHAT: (state, chat) => {
+      if (state.current_post) {
+        state.current_post.chats.push(chat);
+      }
     },
     SET_EVENTS: (state, payload) => {
       state.events = payload;
@@ -104,12 +111,15 @@ export default new Vuex.Store({
 
       context.commit("SET_POSTS", data.results);
     },
-    FETCH_POST: async (context, id) => {
-      const { data } = await Axios.get(`${API}/api/posts/${id}`, {
-        withCredentials: true
-      });
+    FETCH_POST: async (context, options) => {
+      const { data } = await Axios.get(
+        `${API}/api/posts/${options.id}?withChats=${options.withChats}`,
+        {
+          withCredentials: true
+        }
+      );
 
-      return data;
+      context.commit("SET_POST", data.result);
     },
     FETCH_USER_POSTS: async context => {
       let id = context.state.userID;
@@ -154,12 +164,13 @@ export default new Vuex.Store({
       context.commit("NEW_EVENT", event);
     },
     UPDATE_POST: (context, post) => {
-      const index = context.getters.POST_ID(post._id);
-      context.commit("UPDATE_POST", { index, post });
+      // const index = context.getters.POST_ID(post._id);
+      context.commit("UPDATE_POST", post);
     },
     ADD_CHAT: (context, chat) => {
-      let index = context.getters.POST_ID(chat.post);
-      context.commit("ADD_CHAT", { index, chat });
+      // let index = context.getters.POST_ID(chat.post);
+      // Add chat to current post if possible :)
+      context.commit("ADD_CHAT", chat);
     }
   }
 });

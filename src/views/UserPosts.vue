@@ -75,13 +75,19 @@ export default {
     openPost(post) {
       if (
         post.participants.some(u => {
-          return u === this.$store.getters.USER;
+          return u === this.$store.getters.USER_ID;
         })
       ) {
         // this.$router.push({ name: "Post", params: { id } });
-        this.$router.push({ name: "Post", params: { id: post._id } });
+        this.$router.push({
+          name: "Post",
+          params: { id: post._id }
+        });
       } else {
-        this.$router.push({ name: "Post", params: { id: post._id } });
+        this.$router.push({
+          name: "Post",
+          params: { id: post._id }
+        });
       }
     }
   },
@@ -92,6 +98,7 @@ export default {
   },
   created() {
     this.$store.dispatch("FETCH_USER_POSTS");
+    // this.$store.dispatch("FETCH_POSTS");
   }
 };
 </script>

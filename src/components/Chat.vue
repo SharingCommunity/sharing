@@ -1,7 +1,7 @@
 <template>
   <div
     class="chat-bubble"
-    :class="this.chat.from === this.$store.getters.USER ? 'mine' : 'theirs'"
+    :class="this.chat.from === this.$store.getters.USER_ID ? 'mine' : 'theirs'"
   >
     <div class="chat-message">
       {{ chat.message }}
