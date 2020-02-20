@@ -84,11 +84,11 @@ export default {
       console.log("New Post!");
     },
     new_event: function(event) {
-      this.makeToast(false, event.message, "New Message!");
+      this.makeToast(false, event.message, event.prompt);
       this.$store.dispatch("NEW_EVENT", event);
     },
     post_completed: function(event) {
-      // TODO: Add to Events array...
+      console.log("Post completed!");
       this.makeToast(false, event.message, "Post Completed");
     },
     new_chat: function(chat) {

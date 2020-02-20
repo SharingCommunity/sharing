@@ -6,28 +6,11 @@
     <b-navbar-brand class="text-white">
       WeGive
       <b-badge variant="secondary" style="text-size: x-small;" pill
-        >alpha v0.6.3</b-badge
+        >alpha v0.6.4</b-badge
       >
     </b-navbar-brand>
-    <div>
-      <div class="notifs nav-icon">
-        <b-dropdown size="sm" variant="link" :toggle-class="classes" no-caret>
-          <template v-slot:button-content>
-            <eva-icon
-              name="more-vertical-outline"
-              fill="white"
-              width="25px"
-              height="25px"
-            ></eva-icon>
-          </template>
-          <b-dropdown-item class="button" @click="goTo('/posts')"
-            >Your Posts</b-dropdown-item
-          >
-          <b-dropdown-item @click="goTo('/help/about')"
-            >WTF is this</b-dropdown-item
-          >
-        </b-dropdown>
-      </div>
+
+    <div class="d-flex">
       <div class="notifs nav-icon opacity" @click="goTo('/events')">
         <b-badge v-if="events.length > 0" variant="light">{{
           events.length
@@ -41,6 +24,39 @@
           height="25px"
         ></eva-icon>
       </div>
+
+      <div class="notifs nav-icon opacity ml-3" @click="goTo('/posts')">
+        <b-badge v-if="events.length > 0" variant="light">{{
+          events.length
+        }}</b-badge>
+        <eva-icon
+          v-b-tooltip.hover
+          title="Posts"
+          name="message-square-outline"
+          fill="white"
+          width="25px"
+          height="25px"
+        ></eva-icon>
+      </div>
+
+      <div class="notifs nav-icon ml-2">
+        <b-dropdown size="sm" variant="link" :toggle-class="classes" no-caret>
+          <template v-slot:button-content>
+            <eva-icon
+              name="more-vertical-outline"
+              fill="white"
+              width="25px"
+              height="25px"
+            ></eva-icon>
+          </template>
+          <!-- <b-dropdown-item class="button" @click="goTo('/posts')"
+            >Your Posts</b-dropdown-item
+          > -->
+          <b-dropdown-item @click="goTo('/help/about')"
+            >WTF is this</b-dropdown-item
+          >
+        </b-dropdown>
+      </div>
     </div>
   </b-navbar>
 </template>
@@ -49,7 +65,7 @@ export default {
   name: "Navbar",
   data() {
     return {
-      classes: ["text-decoration-none", "p-0", "pl-2", "opacity"]
+      classes: ["text-decoration-none", "p-0", "opacity"]
     };
   },
   computed: {
@@ -75,8 +91,11 @@ export default {
   cursor: pointer;
 }
 
-.nav-icon {
+.nav-icon-set {
   float: right;
+}
+
+.nav-icon {
   font-size: 1.5rem;
   font-weight: 700;
   line-height: 1;
