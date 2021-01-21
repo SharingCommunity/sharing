@@ -28,6 +28,7 @@ Vue.use(
 // Axios binding
 
 Vue.prototype.$http = Axios;
+// TODO: REMOVE ONE OF THESE!
 Vue.prototype.axios = Axios;
 
 Vue.config.productionTip = false;
